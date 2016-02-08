@@ -31,8 +31,8 @@ const CHANNEL_DOES_NOT_EXIST_MSG = "Der angegebene Kanal existiert nicht."
 // Message shown to users when they attempt to add an invalid URL to the queue.
 const INVALID_URL_MSG = "Der Link den du eingesendet hast, ist in keinem unterstützten Format."
 
-+// Message shown to users when they attempt to search on an invalid platform.
-+const INVALID_SEARCH_PROVIDER  = "The Search provider you submitted does not match the required format."
+// Message shown to users when they attempt to search on an invalid platform.
+const INVALID_SEARCH_PROVIDER  = "The Search provider you submitted does not match the required format."
 
 // Message shown to users when they attempt to add a video that's too long
 const TRACK_TOO_LONG_MSG = "Deine Einsendung %s überschreitet die maximal festgelegte Länge."
