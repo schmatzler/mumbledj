@@ -19,6 +19,7 @@ general:
   default_comment: Hello! I am a bot. Type !help for a list of commands.
 
   # Default channel for the bot to enter upon connection.
+  # NOTE: Leave this empty if you wish for the bot to start in the root channel.
   default_channel:
 
   # Maximum song duration in seconds (0 = unrestricted)
