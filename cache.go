@@ -48,8 +48,38 @@ func NewCache() *Cache {
 	}
 }
 
-// GetCurrentStatistics retrieves the total file size and number of files
-// stored in the cache and updates the member variables accordingly.
-func (c *Cache) GetCurrentStatistics() (int, int64) {
+// CheckDirectorySize checks the cache directory to determine if the filesize
+// of the files within exceed the user-specified size limit. If so, the oldest
+// files are cleared until it is no longer exceeding the limit.
+// TODO: Implement after Config.
+func (c *Cache) CheckDirectorySize() {
+
+}
+
+// UpdateStatistics updates the statistics relevant to the cache (number of
+// audio files cached, total current size of the cache).
+func (c *Cache) UpdateStatistics() {
+	c.NumAudioFiles, c.TotalFileSize = c.getCurrentStatistics()
+}
+
+// CleanPeriodically loops forever, deleting expired cached audio files as necessary.
+// TODO: Implement after Config.
+func (c *Cache) CleanPeriodically() {
+
+}
+
+// DeleteOldest deletes the oldest file in the cache.
+// TODO: Implement after Config.
+func (c *Cache) DeleteOldest() error {
+	return nil
+}
+
+// DeleteAll deletes all cached audio files.
+// TODO: Implement after Config.
+func (c *Cache) DeleteAll() error {
+	return nil
+}
+
+func (c *Cache) getCurrentStatistics() (int, int64) {
 	return 0, 0
 }
