@@ -15,18 +15,18 @@ general:
   playlist_skip_ratio: 0.5
 
   # Default comment to be applied to bot.
-  # NOTE: If you do not want a comment by default, set the variable equal to an empty string ("").
+  # NOTE: If you do not want a comment by default, set to empty string ("").
   default_comment: Hello! I am a bot. Type !help for a list of commands.
 
   # Default channel for the bot to enter upon connection.
-  # NOTE: Leave this empty if you wish for the bot to start in the root channel.
-  default_channel:
+  # NOTE: If you wish for the bot to connect to the root channel, set to empty string ("").
+  default_channel: ""
 
-  # Maximum song duration in seconds (0 = unrestricted)
-  max_song_duration: 0
+  # Maximum track duration in seconds (0 = unrestricted)
+  max_track_duration: 0
 
-  # Maximum songs per playlist (0 = unrestricted)
-  max_song_per_playlist: 50
+  # Maximum tracks per playlist (0 = unrestricted)
+  max_tracks_per_playlist: 50
 
   # Is playlist shuffling enabled when the bot starts?
   automatic_shuffle_on: false
@@ -34,8 +34,52 @@ general:
   # Announce song information at start of track
   announce_new_track: true
 
-  # Command to use to play audio files. The two supported choices are "ffmpeg" and "avconv".
+  # Command to use to play audio files. The two supported choices are ffmpeg and avconv.
   player_command: ffmpeg
+
+
+connection:
+
+  # Default address bot should attempt to connect to
+  address: 127.0.0.1
+
+  # Default port bot should attempt to connect to
+  port: "64738"
+
+  # Default password for connecting to server
+  # NOTE: If no password, set to empty string ("").
+  password: ""
+
+  # Default username for MumbleDJ
+  username: MumbleDJ
+
+  # Should the bot attempt an insecure connection?
+  # An insecure connection does not verify the certificate of the server for
+  # consistency. It is best to leave this on, but disable it if you are having
+  # issues connecting to a server or are running multiple instances of MumbleDJ.
+  insecure: false
+
+  # Filepath to certificate file
+  # NOTE: If no certificate file is needed, set to empty string ("").
+  cert: ""
+
+  # Filepath to certificate key file
+  # NOTE: If no key is needed, set to empty string ("").
+  key: ""
+
+  # Access tokens to initialize the bot with
+  # NOTE: If no access tokens are needed, put the following on the next line: - ""
+  access_tokens:
+    - ""
+
+  # Should the bot automatically attempt to retry connecting to a server after disconnecting?
+  retry_enabled: true
+
+  # How many times should the bot attempt to reconnect to the server?
+  retry_attempts: 10
+
+  # How many seconds should the bot wait in-between connection retry attempts?
+  retry_interval: 5
 
 
 cache:
