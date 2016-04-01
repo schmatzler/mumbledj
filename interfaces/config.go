@@ -9,4 +9,6 @@ package interfaces
 
 // Config is an interface of methods that must be implemented by config managers.
 type Config interface {
+	LoadFromConfigFile(string) error
+	LoadFromCommandline()
 }
