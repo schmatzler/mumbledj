@@ -7,6 +7,12 @@
 
 package main
 
+import (
+	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
+)
+
 // GeneralConfig holds general configuration values.
 type GeneralConfig struct {
 	CommandPrefix        string   `yaml:"command_prefix"`
@@ -274,6 +280,29 @@ func NewConfig() *Config {
 // LoadFromConfigFile loads configuration values from the filepath specified via
 // the filepath argument.
 func (c *Config) LoadFromConfigFile(filepath string) error {
+	var (
+		config Config
+		data   []byte
+		err    error
+	)
+
+	if data, err = ioutil.ReadFile(filepath); err != nil {
+		return err
+	}
+
+	err = yaml.Unmarshal(data, &config)
+	if err != nil {
+		return err
+	}
+
+	c.General = config.General
+	c.Connection = config.Connection
+	c.Volume = config.Volume
+	c.Cache = config.Cache
+	c.Aliases = config.Aliases
+	c.Permissions = config.Permissions
+	c.Descriptions = config.Descriptions
+
 	return nil
 }
 
