@@ -73,6 +73,5 @@ func (dj *MumbleDJ) CheckDependencies() error {
 }
 
 func main() {
-	// Initialize MumbleDJ and its data structures.
-	dj := NewMumbleDJ()
+
 }
