@@ -10,8 +10,8 @@ install:
     - go get github.com/layeh/gumble/gumble
     - go get github.com/layeh/gumble/gumbleffmpeg
     - go get github.com/layeh/gumble/gumbleutil
-    - go get github.com/otium/ytdl
     - go get github.com/codegangsta/cli
+    - go get github.com/antonholmquist/jason
     - go get golang.org/x/tools/cmd/cover
 
 branches:
