@@ -1,0 +1,265 @@
+# MumbleDJ
+# By Matthieu Grieger
+# config.yaml
+# Copyright (c) 2016 Matthieu Grieger (MIT License)
+
+general:
+
+  # Command prefix
+  command_prefix: !
+
+  # Ratio that must be met or exceeded to trigger a song skip
+  skip_ratio: 0.5
+
+  # Ratio that must be met or exceeded to trigger a playlist skip
+  playlist_skip_ratio: 0.5
+
+  # Default comment to be applied to bot.
+  # NOTE: If you do not want a comment by default, set the variable equal to an empty string ("").
+  default_comment: Hello! I am a bot. Type !help for a list of commands.
+
+  # Default channel for the bot to enter upon connection.
+  default_channel:
+
+  # Maximum song duration in seconds (0 = unrestricted)
+  max_song_duration: 0
+
+  # Maximum songs per playlist (0 = unrestricted)
+  max_song_per_playlist: 50
+
+  # Is playlist shuffling enabled when the bot starts?
+  automatic_shuffle_on: false
+
+  # Announce song information at start of track
+  announce_new_track: true
+
+  # Command to use to play audio files. The two supported choices are "ffmpeg" and "avconv".
+  player_command: ffmpeg
+
+
+cache:
+
+  # Cache songs as they are downloaded?
+  enabled: false
+
+  # Maximum total file size of cache directory (in MB)
+  maximum_size: 512
+
+  # Period of time that should elapse before a song is cleared from the cache (in hours)
+  expire_time: 24
+
+
+volume:
+
+  # Default volume
+  default: 0.2
+
+  # Lowest volume allowed
+  lowest: 0.01
+
+  # Highest volume allowed
+  highest: 0.8
+
+
+aliases:
+
+  # Aliases used for add command
+  add: add
+
+  # Aliases used for addnext command
+  add_next: addnext
+
+  # Aliases used for skip command
+  skip: skip
+
+  # Aliases used for playlist skip command
+  skip_playlist: skipplaylist
+
+  # Aliases used for force skip command
+  force_skip: forceskip
+
+  # Aliases used for force playlist skip command
+  force_skip_playlist: forceskipplaylist
+
+  # Aliases used for help command
+  help: help
+
+  # Aliases used for volume command
+  volume: volume
+
+  # Aliases used for move command
+  move: move
+
+  # Aliases used for reload command
+  reload: reload
+
+  # Aliases used for queue reset command
+  reset: reset
+
+  # Aliases used for numtracks command
+  num_tracks: numtracks
+
+  # Aliases used for nexttrack command
+  next_track: nexttrack
+
+  # Aliases used for the currenttrack command
+  current_track: currenttrack
+
+  # Aliases used for numcached command
+  num_cached: numcached
+
+  # Aliases used for cachesize command
+  cache_size: cachesize
+
+  # Aliases used for kill command
+  kill: kill
+
+  # Aliases used for shuffle command
+  shuffle: shuffle
+
+  # Aliases used for toggleshuffle command
+  toggle_shuffle: toggleshuffle
+
+  # Aliases used for listsongs command
+  list_tracks: listtracks
+
+  # Aliases used for version command
+  version: version
+
+
+permissions:
+
+  # Enable admins
+  enabled: true
+
+  # Make add an admin command?
+  add: false
+
+  # Make addnext an admin command?
+  add_next: true
+
+  # Make playlist adds an admin only action?
+  add_playlist: false
+
+  # Make skip an admin command?
+  skip: false
+
+  # Make forceskip an admin command?
+  force_skip: true
+
+  # Make forceskipplaylist an admin command?
+  force_skip_playlist: true
+
+  # Make help an admin command?
+  help: false
+
+  # Make volume an admin command?
+  volume: false
+
+  # Make move an admin command?
+  move: true
+
+  # Make reload an admin command?
+  reload: true
+
+  # Make reset an admin command?
+  reset: true
+
+  # Make numtracks an admin command?
+  num_tracks: false
+
+  # Make nexttrack an admin command?
+  next_track: false
+
+  # Make currenttrack an admin command?
+  current_track: false
+
+  # Make setcomment an admin command?
+  set_comment: true
+
+  # Make numcached an admin command?
+  num_cached: true
+
+  # Make cachesize an admin command?
+  cache_size: true
+
+  # Make kill an admin command?
+  kill: true
+
+  # Make shuffle an admin command?
+  shuffle: true
+
+  # Make toggleshuffle an admin command?
+  toggle_shuffle: true
+
+  # Make listtracks an admin command?
+  list_tracks: false
+
+  # Make version an admin command?
+  version: false
+
+
+descriptions:
+
+  # Description for add command
+  add: Adds a track or playlist from a media site to the audio queue.
+
+  # Description for skip command
+  skip: Places a vote to skip the current track.
+
+  # Description for skipplaylist command
+  skip_playlist: Places a vote to skip the current playlist.
+
+  # Description for forceskip command
+  force_skip: Immediately skips the current track.
+
+  # Description for forceskipplaylist command
+  force_skip_playlist: Immediately skips the current playlist.
+
+  # Description for help command
+  help: Outputs this list of commands.
+
+  # Description for volume command
+  volume: Changes the volume if an argument is provided, outputs the current volume otherwise.
+
+  # Description for move command
+  move: Moves the bot into the Mumble channel provided via argument.
+
+  # Description for reload command
+  reload: Reloads the configuration file.
+
+  # Description for reset command
+  reset: Resets the audio queue by removing all queue items.
+
+  # Description for numtracks command
+  num_tracks: Outputs the number of tracks currently in the audio queue.
+
+  # Description for nexttrack command
+  next_track: Outputs information about the next track in the queue if one exists.
+
+  # Description for currenttrack command
+  current_track: Outputs information about the current track in the queue if one exists.
+
+  # Description for setcomment command
+  set_comment: Sets the comment displayed next to MumbleDJ's username in Mumble.
+
+  # Description for numcached command
+  num_cached: Outputs the number of tracks cached on disk if caching is enabled.
+
+  # Description for cachesize command
+  cache_size: Outputs the file size of the cache in MiB if caching is enabled.
+
+  # Description for kill command
+  kill: Stops the bot and cleans its cache directory.
+
+  # Description for shuffle command
+  shuffle: Randomizes the tracks currently in the audio queue.
+
+  # Description for toggleshuffle command
+  toggle_shuffle: Toggles permanent track shuffling on/off.
+
+  # Description for listtracks command
+  list_tracks: Outputs a list of the tracks currently in the queue.
+
+  # Description for version command
+  version: Outputs the current version of MumbleDJ.
