@@ -9,137 +9,140 @@ package main
 
 // GeneralConfig holds general configuration values.
 type GeneralConfig struct {
-	CommandPrefix        string
-	SkipRatio            float32
-	PlaylistSkipRatio    float32
-	DefaultComment       string
-	DefaultChannel       []string
-	MaxTrackDuration     int
-	MaxTracksPerPlaylist int
-	AutomaticShuffleOn   bool
-	PlayerCommand        string
+	CommandPrefix        string   `yaml:"command_prefix"`
+	SkipRatio            float32  `yaml:"skip_ratio"`
+	PlaylistSkipRatio    float32  `yaml:"playlist_skip_ratio"`
+	DefaultComment       string   `yaml:"default_comment"`
+	DefaultChannel       []string `yaml:"default_channel"`
+	MaxTrackDuration     int      `yaml:"max_track_duration"`
+	MaxTracksPerPlaylist int      `yaml:"max_tracks_per_playlist"`
+	AutomaticShuffleOn   bool     `yaml:"automatic_shuffle_on"`
+	AnnounceNewTrack     bool     `yaml:"announce_new_track"`
+	PlayerCommand        string   `yaml:"player_command"`
 }
 
 // ConnectionConfig holds connection configuration values.
 type ConnectionConfig struct {
-	Address       string
-	Port          string
-	Password      string
-	Username      string
-	Insecure      bool
-	Cert          string
-	Key           string
-	AccessTokens  []string
-	RetryEnabled  bool
-	RetryAttempts int
-	RetryInterval int
+	Address       string   `yaml:"address"`
+	Port          string   `yaml:"port"`
+	Password      string   `yaml:"password"`
+	Username      string   `yaml:"username"`
+	Insecure      bool     `yaml:"insecure"`
+	Cert          string   `yaml:"cert"`
+	Key           string   `yaml:"key"`
+	AccessTokens  []string `yaml:"access_tokens"`
+	RetryEnabled  bool     `yaml:"retry_enabled"`
+	RetryAttempts int      `yaml:"retry_attempts"`
+	RetryInterval int      `yaml:"retry_interval"`
 }
 
 // VolumeConfig holds volume configuration values.
 type VolumeConfig struct {
-	Default float32
-	Lowest  float32
-	Highest float32
+	Default float32 `yaml:"default"`
+	Lowest  float32 `yaml:"lowest"`
+	Highest float32 `yaml:"highest"`
 }
 
 // CacheConfig holds cache configuration values.
 type CacheConfig struct {
-	Enabled       bool
-	MaximumSize   int
-	ExpireTime    int
-	CheckInterval int
-	Directory     string
+	Enabled       bool   `yaml:"enabled"`
+	MaximumSize   int    `yaml:"maximum_size"`
+	ExpireTime    int    `yaml:"expire_time"`
+	CheckInterval int    `yaml:"check_interval"`
+	Directory     string `yaml:"directory"`
 }
 
 // AliasesConfig holds command alias configuration values.
 type AliasesConfig struct {
-	Add               []string
-	AddNext           []string
-	Skip              []string
-	SkipPlaylist      []string
-	ForceSkip         []string
-	ForceSkipPlaylist []string
-	Help              []string
-	Volume            []string
-	Move              []string
-	Reload            []string
-	Reset             []string
-	NumTracks         []string
-	NextTrack         []string
-	CurrentTrack      []string
-	SetComment        []string
-	NumCached         []string
-	CacheSize         []string
-	Kill              []string
-	Shuffle           []string
-	ToggleShuffle     []string
-	ListTracks        []string
-	Version           []string
+	Add               []string `yaml:"add"`
+	AddNext           []string `yaml:"add_next"`
+	Skip              []string `yaml:"skip"`
+	SkipPlaylist      []string `yaml:"skip_playlist"`
+	ForceSkip         []string `yaml:"force_skip"`
+	ForceSkipPlaylist []string `yaml:"force_skip_playlist"`
+	Help              []string `yaml:"help"`
+	Volume            []string `yaml:"volume"`
+	Move              []string `yaml:"move"`
+	Reload            []string `yaml:"reload"`
+	Reset             []string `yaml:"reset"`
+	NumTracks         []string `yaml:"num_tracks"`
+	NextTrack         []string `yaml:"next_track"`
+	CurrentTrack      []string `yaml:"current_track"`
+	SetComment        []string `yaml:"set_comment"`
+	NumCached         []string `yaml:"num_cached"`
+	CacheSize         []string `yaml:"cache_size"`
+	Kill              []string `yaml:"kill"`
+	Shuffle           []string `yaml:"shuffle"`
+	ToggleShuffle     []string `yaml:"toggle_shuffle"`
+	ListTracks        []string `yaml:"list_tracks"`
+	Version           []string `yaml:"version"`
 }
 
 // PermissionsConfig holds command permission configuration values.
 type PermissionsConfig struct {
-	Enabled           bool
-	Add               bool
-	AddPlaylist       bool
-	Skip              bool
-	SkipPlaylist      bool
-	ForceSkip         bool
-	ForceSkipPlaylist bool
-	Help              bool
-	Volume            bool
-	Move              bool
-	Reload            bool
-	Reset             bool
-	NumTracks         bool
-	NextTrack         bool
-	CurrentTrack      bool
-	SetComment        bool
-	NumCached         bool
-	CacheSize         bool
-	Kill              bool
-	Shuffle           bool
-	ToggleShuffle     bool
-	ListTracks        bool
-	Version           bool
+	Enabled           bool `yaml:"enabled"`
+	Add               bool `yaml:"add"`
+	AddNext           bool `yaml:"add_next"`
+	AddPlaylist       bool `yaml:"add_playlist"`
+	Skip              bool `yaml:"skip"`
+	SkipPlaylist      bool `yaml:"skip_playlist"`
+	ForceSkip         bool `yaml:"force_skip"`
+	ForceSkipPlaylist bool `yaml:"force_skip_playlist"`
+	Help              bool `yaml:"help"`
+	Volume            bool `yaml:"volume"`
+	Move              bool `yaml:"move"`
+	Reload            bool `yaml:"reload"`
+	Reset             bool `yaml:"reset"`
+	NumTracks         bool `yaml:"num_tracks"`
+	NextTrack         bool `yaml:"next_track"`
+	CurrentTrack      bool `yaml:"current_track"`
+	SetComment        bool `yaml:"set_comment"`
+	NumCached         bool `yaml:"num_cached"`
+	CacheSize         bool `yaml:"cache_size"`
+	Kill              bool `yaml:"kill"`
+	Shuffle           bool `yaml:"shuffle"`
+	ToggleShuffle     bool `yaml:"toggle_shuffle"`
+	ListTracks        bool `yaml:"list_tracks"`
+	Version           bool `yaml:"version"`
 }
 
 // DescriptionsConfig holds command description configuration values.
 type DescriptionsConfig struct {
-	Add               string
-	Skip              string
-	SkipPlaylist      string
-	ForceSkip         string
-	ForceSkipPlaylist string
-	Help              string
-	Volume            string
-	Move              string
-	Reload            string
-	Reset             string
-	NumTracks         string
-	NextTrack         string
-	CurrentTrack      string
-	SetComment        string
-	NumCached         string
-	CacheSize         string
-	Kill              string
-	Shuffle           string
-	ToggleShuffle     string
-	ListTracks        string
-	Version           string
+	Add               string `yaml:"add"`
+	AddNext           string `yaml:"add_next"`
+	Skip              string `yaml:"skip"`
+	SkipPlaylist      string `yaml:"skip_playlist"`
+	ForceSkip         string `yaml:"force_skip"`
+	ForceSkipPlaylist string `yaml:"force_skip_playlist"`
+	Help              string `yaml:"help"`
+	Volume            string `yaml:"volume"`
+	Move              string `yaml:"move"`
+	Reload            string `yaml:"reload"`
+	Reset             string `yaml:"reset"`
+	NumTracks         string `yaml:"num_tracks"`
+	NextTrack         string `yaml:"next_track"`
+	CurrentTrack      string `yaml:"current_track"`
+	SetComment        string `yaml:"set_comment"`
+	NumCached         string `yaml:"num_cached"`
+	CacheSize         string `yaml:"cache_size"`
+	Kill              string `yaml:"kill"`
+	Shuffle           string `yaml:"shuffle"`
+	ToggleShuffle     string `yaml:"toggle_shuffle"`
+	ListTracks        string `yaml:"list_tracks"`
+	Version           string `yaml:"version"`
 }
 
 // Config gathers all logic related to configuration via commandline arguments
 // and configuration files.
 type Config struct {
 	ConfigFileLocation string
-	General            GeneralConfig
-	Connection         ConnectionConfig
-	Volume             VolumeConfig
-	Cache              CacheConfig
-	Aliases            AliasesConfig
-	Permissions        PermissionsConfig
-	Descriptions       DescriptionsConfig
+	General            GeneralConfig      `yaml:"general"`
+	Connection         ConnectionConfig   `yaml:"connection"`
+	Volume             VolumeConfig       `yaml:"volume"`
+	Cache              CacheConfig        `yaml:"cache"`
+	Aliases            AliasesConfig      `yaml:"aliases"`
+	Permissions        PermissionsConfig  `yaml:"permissions"`
+	Descriptions       DescriptionsConfig `yaml:"descriptions"`
 }
 
 // NewConfig returns a new config populated with default values.
@@ -153,6 +156,7 @@ func NewConfig() *Config {
 		MaxTrackDuration:     0,
 		MaxTracksPerPlaylist: 50,
 		AutomaticShuffleOn:   false,
+		AnnounceNewTrack:     true,
 		PlayerCommand:        "ffmpeg",
 	}
 	connectionConfig := ConnectionConfig{
@@ -207,6 +211,7 @@ func NewConfig() *Config {
 	permissionsConfig := PermissionsConfig{
 		Enabled:           true,
 		Add:               false,
+		AddNext:           true,
 		AddPlaylist:       false,
 		Skip:              false,
 		SkipPlaylist:      false,
@@ -231,6 +236,7 @@ func NewConfig() *Config {
 	}
 	descriptionsConfig := DescriptionsConfig{
 		Add:               "Adds a track or playlist from a media site to the audio queue.",
+		AddNext:           "Adds a track or playlist from a media site as the next item in the audio queue.",
 		Skip:              "Places a vote to skip the current track.",
 		SkipPlaylist:      "Places a vote to skip the current playlist.",
 		ForceSkip:         "Immediately skips the current track.",
