@@ -54,6 +54,7 @@ type CacheConfig struct {
 // AliasesConfig holds command alias configuration values.
 type AliasesConfig struct {
 	Add               []string
+	AddNext           []string
 	Skip              []string
 	SkipPlaylist      []string
 	ForceSkip         []string
@@ -181,12 +182,13 @@ func NewConfig() *Config {
 	}
 	aliasesConfig := AliasesConfig{
 		Add:               []string{"add", "a"},
+		AddNext:           []string{"addnext", "an"},
 		Skip:              []string{"skip", "s"},
 		SkipPlaylist:      []string{"skipplaylist", "sp"},
 		ForceSkip:         []string{"forceskip", "fs"},
 		ForceSkipPlaylist: []string{"forceskipplaylist", "fsp"},
 		Help:              []string{"help", "h"},
-		Volume:            []string{"volume", "v"},
+		Volume:            []string{"volume", "vol", "v"},
 		Move:              []string{"move", "m"},
 		Reload:            []string{"reload", "r"},
 		Reset:             []string{"reset", "re"},

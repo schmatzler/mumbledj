@@ -64,67 +64,124 @@ volume:
 aliases:
 
   # Aliases used for add command
-  add: add
+  add:
+    - add
+    - a
 
   # Aliases used for addnext command
-  add_next: addnext
+  add_next:
+    - addnext
+    - an
 
   # Aliases used for skip command
-  skip: skip
+  skip:
+    - skip
+    - s
 
   # Aliases used for playlist skip command
-  skip_playlist: skipplaylist
+  skip_playlist:
+    - skipplaylist
+    - sp
 
   # Aliases used for force skip command
-  force_skip: forceskip
+  force_skip:
+    - forceskip
+    - fs
 
   # Aliases used for force playlist skip command
-  force_skip_playlist: forceskipplaylist
+  force_skip_playlist:
+    - forceskipplaylist
+    - fsp
 
   # Aliases used for help command
-  help: help
+  help:
+    - help
+    - h
 
   # Aliases used for volume command
-  volume: volume
+  volume:
+    - volume
+    - vol
+    - v
 
   # Aliases used for move command
-  move: move
+  move:
+    - move
+    - m
 
   # Aliases used for reload command
-  reload: reload
+  reload:
+    - reload
+    - r
 
   # Aliases used for queue reset command
-  reset: reset
+  reset:
+    - reset
+    - re
 
   # Aliases used for numtracks command
-  num_tracks: numtracks
+  num_tracks:
+    - numtracks
+    - numsongs
+    - nt
 
   # Aliases used for nexttrack command
-  next_track: nexttrack
+  next_track:
+    - nexttrack
+    - nextsong
+    - next
 
   # Aliases used for the currenttrack command
-  current_track: currenttrack
+  current_track:
+    - currenttrack
+    - currentsong
+    - current
+
+  # Aliases used for the setcomment command
+  set_comment:
+    - setcomment
+    - comment
+    - sc
 
   # Aliases used for numcached command
-  num_cached: numcached
+  num_cached:
+    - numcached
+    - nc
 
   # Aliases used for cachesize command
-  cache_size: cachesize
+  cache_size:
+    - cachesize
+    - cs
 
   # Aliases used for kill command
-  kill: kill
+  kill:
+    - kill
+    - k
 
   # Aliases used for shuffle command
-  shuffle: shuffle
+  shuffle:
+    - shuffle
+    - shuf
+    - sh
 
   # Aliases used for toggleshuffle command
-  toggle_shuffle: toggleshuffle
+  toggle_shuffle:
+    - toggleshuffle
+    - toggleshuf
+    - togshuf
+    - tsh
 
   # Aliases used for listsongs command
-  list_tracks: listtracks
+  list_tracks:
+    - listtracks
+    - listsongs
+    - list
+    - l
 
   # Aliases used for version command
-  version: version
+  version:
+    - version
+    - v
 
 
 permissions:
