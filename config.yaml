@@ -93,6 +93,13 @@ cache:
   # Period of time that should elapse before a song is cleared from the cache (in hours)
   expire_time: 24
 
+  # Period of time between each check of the cache for expired items (in minutes)
+  check_interval: 5
+
+  # Directory to store cached items
+  # NOTE: If you'd like to use the location set by the XDG standard, use $XDG_CACHE_HOME
+  directory: ~/.mumbledj/cache
+
 
 volume:
 
@@ -305,6 +312,9 @@ descriptions:
 
   # Description for add command
   add: Adds a track or playlist from a media site to the audio queue.
+
+  # Description for addnext command
+  add_next: Adds a track or playlist from a media site as the next item in the audio queue.
 
   # Description for skip command
   skip: Places a vote to skip the current track.
