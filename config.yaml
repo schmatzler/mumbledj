@@ -6,7 +6,7 @@
 general:
 
   # Command prefix
-  command_prefix: !
+  command_prefix: "!"
 
   # Ratio that must be met or exceeded to trigger a song skip
   skip_ratio: 0.5
