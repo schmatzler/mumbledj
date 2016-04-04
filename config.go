@@ -15,16 +15,16 @@ import (
 
 // GeneralConfig holds general configuration values.
 type GeneralConfig struct {
-	CommandPrefix        string   `yaml:"command_prefix"`
-	SkipRatio            float32  `yaml:"skip_ratio"`
-	PlaylistSkipRatio    float32  `yaml:"playlist_skip_ratio"`
-	DefaultComment       string   `yaml:"default_comment"`
-	DefaultChannel       []string `yaml:"default_channel"`
-	MaxTrackDuration     int      `yaml:"max_track_duration"`
-	MaxTracksPerPlaylist int      `yaml:"max_tracks_per_playlist"`
-	AutomaticShuffleOn   bool     `yaml:"automatic_shuffle_on"`
-	AnnounceNewTrack     bool     `yaml:"announce_new_track"`
-	PlayerCommand        string   `yaml:"player_command"`
+	CommandPrefix        string  `yaml:"command_prefix"`
+	SkipRatio            float32 `yaml:"skip_ratio"`
+	PlaylistSkipRatio    float32 `yaml:"playlist_skip_ratio"`
+	DefaultComment       string  `yaml:"default_comment"`
+	DefaultChannel       string  `yaml:"default_channel"`
+	MaxTrackDuration     int     `yaml:"max_track_duration"`
+	MaxTracksPerPlaylist int     `yaml:"max_tracks_per_playlist"`
+	AutomaticShuffleOn   bool    `yaml:"automatic_shuffle_on"`
+	AnnounceNewTrack     bool    `yaml:"announce_new_track"`
+	PlayerCommand        string  `yaml:"player_command"`
 }
 
 // ConnectionConfig holds connection configuration values.
@@ -158,7 +158,7 @@ func NewConfig() *Config {
 		SkipRatio:            0.5,
 		PlaylistSkipRatio:    0.5,
 		DefaultComment:       "Hello! I am a bot. Type !help for a list of commands.",
-		DefaultChannel:       []string{""},
+		DefaultChannel:       "",
 		MaxTrackDuration:     0,
 		MaxTracksPerPlaylist: 50,
 		AutomaticShuffleOn:   false,
@@ -295,9 +295,4 @@ func (c *Config) LoadFromConfigFile(filepath string) error {
 	}
 
 	return nil
-}
-
-// LoadFromCommandline loads configuration values from the commandline.
-func (c *Config) LoadFromCommandline() {
-
 }
