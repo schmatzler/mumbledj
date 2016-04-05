@@ -12,7 +12,6 @@ import (
 
 	"github.com/layeh/gumble/gumble"
 	"github.com/layeh/gumble/gumbleffmpeg"
-	"github.com/matthieugrieger/mumbledj/interfaces"
 )
 
 // MumbleDJ is a struct that keeps track of all aspects of the bot's state.
@@ -20,10 +19,10 @@ type MumbleDJ struct {
 	Client       *gumble.Client
 	GumbleConfig *gumble.Config
 	AudioStream  *gumbleffmpeg.Stream
-	BotConfig    interfaces.Config
-	Queue        interfaces.Queue
-	Cache        interfaces.Cache
-	Skips        interfaces.SkipTracker
+	BotConfig    *Config
+	Queue        *Queue
+	Cache        *Cache
+	Skips        *SkipTracker
 	Log          *log.Logger
 	KeepAlive    chan bool
 }
