@@ -29,17 +29,17 @@ type GeneralConfig struct {
 
 // ConnectionConfig holds connection configuration values.
 type ConnectionConfig struct {
-	Address       string   `yaml:"address"`
-	Port          string   `yaml:"port"`
-	Password      string   `yaml:"password"`
-	Username      string   `yaml:"username"`
-	Insecure      bool     `yaml:"insecure"`
-	Cert          string   `yaml:"cert"`
-	Key           string   `yaml:"key"`
-	AccessTokens  []string `yaml:"access_tokens"`
-	RetryEnabled  bool     `yaml:"retry_enabled"`
-	RetryAttempts int      `yaml:"retry_attempts"`
-	RetryInterval int      `yaml:"retry_interval"`
+	Address       string `yaml:"address"`
+	Port          string `yaml:"port"`
+	Password      string `yaml:"password"`
+	Username      string `yaml:"username"`
+	Insecure      bool   `yaml:"insecure"`
+	Cert          string `yaml:"cert"`
+	Key           string `yaml:"key"`
+	AccessTokens  string `yaml:"access_tokens"`
+	RetryEnabled  bool   `yaml:"retry_enabled"`
+	RetryAttempts int    `yaml:"retry_attempts"`
+	RetryInterval int    `yaml:"retry_interval"`
 }
 
 // VolumeConfig holds volume configuration values.
@@ -173,7 +173,7 @@ func NewConfig() *Config {
 		Insecure:      false,
 		Cert:          "",
 		Key:           "",
-		AccessTokens:  []string{""},
+		AccessTokens:  "",
 		RetryEnabled:  true,
 		RetryAttempts: 10,
 		RetryInterval: 5,
