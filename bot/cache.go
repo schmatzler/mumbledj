@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * cache.go
+ * bot/cache.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"os"

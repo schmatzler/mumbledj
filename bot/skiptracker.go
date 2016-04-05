@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * skiptracker.go
+ * bot/skiptracker.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"fmt"

@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * queue.go
+ * bot/queue.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"errors"

@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * config.go
+ * bot/config.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"io/ioutil"

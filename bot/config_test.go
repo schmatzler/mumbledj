@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * config_test.go
+ * bot/config_test.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"testing"
@@ -33,7 +33,7 @@ func (suite *ConfigTestSuite) TestNewConfig() {
 
 func (suite *ConfigTestSuite) TestLoadFromConfigFile() {
 	config := new(Config)
-	err := config.LoadFromConfigFile("config.yaml")
+	err := config.LoadFromConfigFile("../config.yaml")
 
 	assert.Nil(suite.T(), err, "No error should be returned")
 

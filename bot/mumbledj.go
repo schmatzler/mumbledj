@@ -1,11 +1,11 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * mumbledj.go
+ * bot/mumbledj.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
-package main
+package bot
 
 import (
 	"log"
@@ -27,6 +27,9 @@ type MumbleDJ struct {
 	Log          *log.Logger
 	KeepAlive    chan bool
 }
+
+// DJ is a struct that keeps track of all aspects of MumbleDJ's environment.
+var DJ *MumbleDJ
 
 // NewMumbleDJ initializes and returns a MumbleDJ type.
 func NewMumbleDJ() *MumbleDJ {
@@ -73,5 +76,5 @@ func (dj *MumbleDJ) CheckDependencies() error {
 }
 
 func main() {
-
+	DJ = NewMumbleDJ()
 }
