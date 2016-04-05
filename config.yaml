@@ -67,10 +67,9 @@ connection:
   # NOTE: If no key is needed, set to empty string ("").
   key: ""
 
-  # Access tokens to initialize the bot with
-  # NOTE: If no access tokens are needed, put the following on the next line: - ""
-  access_tokens:
-    - ""
+  # Access tokens to initialize the bot with (separated by spaces)
+  # NOTE: If no access tokens are needed, set to empty string ("").
+  access_tokens: ""
 
   # Should the bot automatically attempt to retry connecting to a server after disconnecting?
   retry_enabled: true
