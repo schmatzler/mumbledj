@@ -86,30 +86,31 @@ type AliasesConfig struct {
 
 // PermissionsConfig holds command permission configuration values.
 type PermissionsConfig struct {
-	Enabled           bool `yaml:"enabled"`
-	Add               bool `yaml:"add"`
-	AddNext           bool `yaml:"add_next"`
-	AddPlaylist       bool `yaml:"add_playlist"`
-	Skip              bool `yaml:"skip"`
-	SkipPlaylist      bool `yaml:"skip_playlist"`
-	ForceSkip         bool `yaml:"force_skip"`
-	ForceSkipPlaylist bool `yaml:"force_skip_playlist"`
-	Help              bool `yaml:"help"`
-	Volume            bool `yaml:"volume"`
-	Move              bool `yaml:"move"`
-	Reload            bool `yaml:"reload"`
-	Reset             bool `yaml:"reset"`
-	NumTracks         bool `yaml:"num_tracks"`
-	NextTrack         bool `yaml:"next_track"`
-	CurrentTrack      bool `yaml:"current_track"`
-	SetComment        bool `yaml:"set_comment"`
-	NumCached         bool `yaml:"num_cached"`
-	CacheSize         bool `yaml:"cache_size"`
-	Kill              bool `yaml:"kill"`
-	Shuffle           bool `yaml:"shuffle"`
-	ToggleShuffle     bool `yaml:"toggle_shuffle"`
-	ListTracks        bool `yaml:"list_tracks"`
-	Version           bool `yaml:"version"`
+	Enabled           bool   `yaml:"enabled"`
+	UserGroup         string `yaml:"user_group"`
+	Add               bool   `yaml:"add"`
+	AddNext           bool   `yaml:"add_next"`
+	AddPlaylist       bool   `yaml:"add_playlist"`
+	Skip              bool   `yaml:"skip"`
+	SkipPlaylist      bool   `yaml:"skip_playlist"`
+	ForceSkip         bool   `yaml:"force_skip"`
+	ForceSkipPlaylist bool   `yaml:"force_skip_playlist"`
+	Help              bool   `yaml:"help"`
+	Volume            bool   `yaml:"volume"`
+	Move              bool   `yaml:"move"`
+	Reload            bool   `yaml:"reload"`
+	Reset             bool   `yaml:"reset"`
+	NumTracks         bool   `yaml:"num_tracks"`
+	NextTrack         bool   `yaml:"next_track"`
+	CurrentTrack      bool   `yaml:"current_track"`
+	SetComment        bool   `yaml:"set_comment"`
+	NumCached         bool   `yaml:"num_cached"`
+	CacheSize         bool   `yaml:"cache_size"`
+	Kill              bool   `yaml:"kill"`
+	Shuffle           bool   `yaml:"shuffle"`
+	ToggleShuffle     bool   `yaml:"toggle_shuffle"`
+	ListTracks        bool   `yaml:"list_tracks"`
+	Version           bool   `yaml:"version"`
 }
 
 // DescriptionsConfig holds command description configuration values.
@@ -216,6 +217,7 @@ func NewConfig() *Config {
 	}
 	permissionsConfig := PermissionsConfig{
 		Enabled:           true,
+		UserGroup:         "admins",
 		Add:               false,
 		AddNext:           true,
 		AddPlaylist:       false,

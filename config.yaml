@@ -240,6 +240,9 @@ permissions:
   # Enable admins
   enabled: true
 
+  # Mumble user group in which admins are stored
+  user_group: admins
+
   # Make add an admin command?
   add: false
 
