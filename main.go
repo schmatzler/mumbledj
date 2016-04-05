@@ -81,5 +81,7 @@ func main() {
 	}
 	app.Run(os.Args)
 
-	DJ.Connect()
+	if err := DJ.Connect(); err != nil {
+		DJ.Log.Fatalf("A fatal error occurred: %s", err.Error())
+	}
 }
