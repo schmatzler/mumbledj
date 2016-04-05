@@ -157,7 +157,7 @@ func (dj *MumbleDJ) Connect() error {
 	dj.GumbleConfig = &gumble.Config{
 		Username: dj.BotConfig.Connection.Username,
 		Password: dj.BotConfig.Connection.Password,
-		Address:  dj.BotConfig.Connection.Address + dj.BotConfig.Connection.Port,
+		Address:  dj.BotConfig.Connection.Address + ":" + dj.BotConfig.Connection.Port,
 		Tokens:   strings.Split(dj.BotConfig.Connection.AccessTokens, " "),
 	}
 
