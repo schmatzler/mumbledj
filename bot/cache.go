@@ -8,7 +8,12 @@
 package bot
 
 import (
+	"errors"
+	"fmt"
+	"io/ioutil"
 	"os"
+	"path/filepath"
+	"sort"
 	"time"
 )
 
@@ -51,9 +56,15 @@ func NewCache() *Cache {
 // CheckDirectorySize checks the cache directory to determine if the filesize
 // of the files within exceed the user-specified size limit. If so, the oldest
 // files are cleared until it is no longer exceeding the limit.
-// TODO: Implement after Config.
 func (c *Cache) CheckDirectorySize() {
+	const bytesInMiB int = 1048576
 
+	c.UpdateStatistics()
+	for c.TotalFileSize > int64(DJ.BotConfig.Cache.MaximumSize*bytesInMiB) {
+		if err := c.DeleteOldest(); err != nil {
+			break
+		}
+	}
 }
 
 // UpdateStatistics updates the statistics relevant to the cache (number of
@@ -63,23 +74,59 @@ func (c *Cache) UpdateStatistics() {
 }
 
 // CleanPeriodically loops forever, deleting expired cached audio files as necessary.
-// TODO: Implement after Config.
 func (c *Cache) CleanPeriodically() {
-
+	for range time.Tick(time.Duration(DJ.BotConfig.Cache.CheckInterval) * time.Minute) {
+		files, _ := ioutil.ReadDir(DJ.BotConfig.Cache.Directory)
+		for _, file := range files {
+			// It is safe to check the modification time because when audio files are
+			// played their modification time is updated. This ensures that audio
+			// files will not get deleted while they are playing, assuming a reasonable
+			// expiry time is set in the configuration.
+			hours := time.Since(file.ModTime()).Hours()
+			if hours >= float64(DJ.BotConfig.Cache.ExpireTime) {
+				os.Remove(fmt.Sprintf("%s/%s", DJ.BotConfig.Cache.Directory, file.Name()))
+			}
+		}
+	}
 }
 
 // DeleteOldest deletes the oldest file in the cache.
-// TODO: Implement after Config.
 func (c *Cache) DeleteOldest() error {
-	return nil
+	files, _ := ioutil.ReadDir(DJ.BotConfig.Cache.Directory)
+	if len(files) > 0 {
+		sort.Sort(SortFilesByAge(files))
+		os.Remove(fmt.Sprintf("%s/%s", DJ.BotConfig.Cache.Directory, files[0].Name()))
+		return nil
+	}
+	return errors.New("There are no files currently cached")
 }
 
 // DeleteAll deletes all cached audio files.
-// TODO: Implement after Config.
 func (c *Cache) DeleteAll() error {
+	dir, err := os.Open(DJ.BotConfig.Cache.Directory)
+	if err != nil {
+		return err
+	}
+
+	defer dir.Close()
+	names, err := dir.Readdirnames(-1)
+	if err != nil {
+		return err
+	}
+	for _, name := range names {
+		err = os.RemoveAll(filepath.Join(DJ.BotConfig.Cache.Directory, name))
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
 func (c *Cache) getCurrentStatistics() (int, int64) {
-	return 0, 0
+	var totalSize int64
+	files, _ := ioutil.ReadDir(DJ.BotConfig.Cache.Directory)
+	for _, file := range files {
+		totalSize += file.Size()
+	}
+	return len(files), totalSize
 }
