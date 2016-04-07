@@ -44,6 +44,7 @@ func init() {
 		new(NumTracksCommand),
 		new(ReloadCommand),
 		new(ResetCommand),
+		new(SetCommentCommand),
 		new(VersionCommand),
 	}
 }
