@@ -9,6 +9,7 @@ package bot
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -17,6 +18,7 @@ import (
 	"github.com/layeh/gumble/gumble"
 	"github.com/layeh/gumble/gumbleffmpeg"
 	"github.com/layeh/gumble/gumbleutil"
+	"github.com/matthieugrieger/mumbledj/interfaces"
 )
 
 // MumbleDJ is a struct that keeps track of all aspects of the bot's state.
@@ -28,7 +30,7 @@ type MumbleDJ struct {
 	Queue        *Queue
 	Cache        *Cache
 	Skips        *SkipTracker
-	Commander    *Commander
+	Commands     []interfaces.Command
 	KeepAlive    chan bool
 	Version      string
 }
@@ -40,7 +42,7 @@ var DJ *MumbleDJ
 func NewMumbleDJ() *MumbleDJ {
 	dj := new(MumbleDJ)
 
-	dj.Commander = NewCommander()
+	dj.Commands = make([]interfaces.Command, 0)
 
 	// TODO: Load from config file if necessary.
 	dj.BotConfig = NewConfig()
@@ -58,11 +60,12 @@ func NewMumbleDJ() *MumbleDJ {
 // OnConnect event. First moves MumbleDJ into the default channel if one exists.
 // The configuration is loaded and the audio stream is initialized.
 func (dj *MumbleDJ) OnConnect(e *gumble.ConnectEvent) {
-	defaultChannel := strings.Split(dj.BotConfig.General.DefaultChannel, "/")
-	dj.Client.Self.Move(dj.Client.Channels.Find(defaultChannel...))
+	if dj.BotConfig.General.DefaultChannel != "" {
+		defaultChannel := strings.Split(dj.BotConfig.General.DefaultChannel, "/")
+		dj.Client.Self.Move(dj.Client.Channels.Find(defaultChannel...))
+	}
 
 	dj.AudioStream = nil
-	dj.AudioStream.Volume = dj.BotConfig.Volume.Default
 
 	dj.Client.Self.SetComment(dj.BotConfig.General.DefaultComment)
 
@@ -111,7 +114,7 @@ func (dj *MumbleDJ) OnTextMessage(e *gumble.TextMessageEvent) {
 	if len(plainMessage) != 0 {
 		if plainMessage[0] == dj.BotConfig.General.CommandPrefix[0] &&
 			plainMessage != dj.BotConfig.General.CommandPrefix {
-			message, isPrivateMessage, err := dj.Commander.FindAndExecuteCommand(e.Sender, plainMessage[1:])
+			message, isPrivateMessage, err := dj.FindAndExecuteCommand(e.Sender, plainMessage[1:])
 			if err != nil {
 				Warn.Printf("Sending error message to %s...\n", e.Sender.Name)
 				dj.SendPrivateMessage(e.Sender, fmt.Sprintf("An error occurred while executing your command: %s", err.Error()))
@@ -191,7 +194,7 @@ func (dj *MumbleDJ) Connect() error {
 		TextMessage: dj.OnTextMessage,
 		UserChange:  dj.OnUserChange,
 	})
-	dj.Client.Attach(gumbleutil.AutoBitrate)
+	//dj.Client.Attach(gumbleutil.AutoBitrate)
 
 	Info.Printf("Attempting connection to %s:%s...\n", dj.BotConfig.Connection.Address, dj.BotConfig.Connection.Port)
 	if err := dj.Client.Connect(); err != nil {
@@ -200,7 +203,65 @@ func (dj *MumbleDJ) Connect() error {
 
 	Info.Println("Connected to server!")
 
-	<-dj.KeepAlive
-
 	return nil
+}
+
+// RegisterCommand adds a new command to the list commands.
+func (dj *MumbleDJ) RegisterCommand(command interfaces.Command) error {
+	if len(dj.Commands) != 0 {
+		for _, existingCommand := range dj.Commands {
+			if command == existingCommand {
+				return errors.New("This command has already been registered")
+			}
+		}
+	}
+	dj.Commands = append(dj.Commands, command)
+	return nil
+}
+
+// FindAndExecuteCommand attempts to find a reference to a command in an
+// incoming message. If found, the command is executed and the resulting
+// message/error is returned.
+func (dj *MumbleDJ) FindAndExecuteCommand(user *gumble.User, message string) (string, bool, error) {
+	command, err := dj.findCommand(message)
+	if err != nil {
+		return "", true, errors.New("No command was found in this message")
+	}
+	return dj.executeCommand(user, message, command)
+}
+
+func (dj *MumbleDJ) findCommand(message string) (interfaces.Command, error) {
+	var possibleCommand string
+	if strings.Contains(message, " ") {
+		possibleCommand = strings.ToLower(message[:strings.Index(message, " ")])
+	} else {
+		possibleCommand = strings.ToLower(message)
+	}
+	for _, command := range dj.Commands {
+		for _, alias := range command.Aliases() {
+			if possibleCommand == alias {
+				return command, nil
+			}
+		}
+	}
+	return nil, errors.New("No command was found in this message")
+}
+
+func (dj *MumbleDJ) executeCommand(user *gumble.User, message string, command interfaces.Command) (string, bool, error) {
+	canExecute := false
+	if dj.BotConfig.Permissions.Enabled && command.IsAdminCommand() {
+		userGroups := <-gumbleutil.UserGroups(dj.Client, user, dj.Client.Self.Channel)
+		for _, userGroup := range userGroups {
+			if userGroup == dj.BotConfig.Permissions.UserGroup {
+				canExecute = true
+			}
+		}
+	} else {
+		canExecute = true
+	}
+
+	if canExecute {
+		return command.Execute(user, strings.Split(message, " ")[1:]...)
+	}
+	return "", true, errors.New("You do not have permission to execute this command")
 }
