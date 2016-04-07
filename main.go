@@ -8,6 +8,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -17,40 +18,37 @@ import (
 )
 
 // DJ is a global variable that holds various details about the bot's state.
-var DJ *bot.MumbleDJ
+var DJ = bot.NewMumbleDJ()
 
 // Warn is a global logger that logs warn messages.
-var Warn *log.Logger
+var Warn = log.New(ioutil.Discard, "MumbleDJ WARN: ", 0)
 
 // Error is a global logger that logs error messages.
-var Error *log.Logger
+var Error = log.New(ioutil.Discard, "MumbleDJ ERROR: ", 0)
 
 // Info is a global logger that logs info messages.
-var Info *log.Logger
+var Info = log.New(ioutil.Discard, "MumbleDJ INFO: ", 0)
 
-func main() {
-	DJ = bot.NewMumbleDJ()
-
-	app := cli.NewApp()
-	app.Name = "MumbleDJ"
-	app.Usage = "A Mumble bot that plays audio from various media sites."
-	app.Version = "3.0.0-alpha"
-	DJ.Version = app.Version
-
-	// TODO: Allow user to redirect log output.
-	Warn = log.New(os.Stdout, "MumbleDJ WARN:", 0)
-	Error = log.New(os.Stdout, "MumbleDJ ERROR:", 0)
-	Info = log.New(os.Stdout, "MumbleDJ INFO:", 0)
+func init() {
+	DJ.Commands = commands.DJ.Commands
 
 	// Injection into sub-packages.
 	commands.DJ = DJ
 	commands.Warn = Warn
 	commands.Error = Error
 	commands.Info = Info
-
 	bot.Warn = Warn
 	bot.Error = Error
 	bot.Info = Info
+
+	DJ.Version = "3.0.0-alpha"
+}
+
+func main() {
+	app := cli.NewApp()
+	app.Name = "MumbleDJ"
+	app.Usage = "A Mumble bot that plays audio from various media sites."
+	app.Version = DJ.Version
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
@@ -109,7 +107,14 @@ func main() {
 	}
 	app.Run(os.Args)
 
+	// TODO: Allow user to redirect log output.
+	Warn.SetOutput(os.Stdout)
+	Error.SetOutput(os.Stdout)
+	Info.SetOutput(os.Stdout)
+
 	if err := DJ.Connect(); err != nil {
 		Error.Fatalf("\nA fatal error occurred: %s", err.Error())
 	}
+
+	<-DJ.KeepAlive
 }
