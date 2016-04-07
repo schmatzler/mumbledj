@@ -34,6 +34,7 @@ func init() {
 		new(CacheSizeCommand),
 		new(CurrentTrackCommand),
 		new(ForceSkipCommand),
+		new(ForceSkipPlaylistCommand),
 		new(VersionCommand),
 	}
 }
