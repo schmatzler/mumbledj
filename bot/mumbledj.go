@@ -10,7 +10,6 @@ package bot
 import (
 	"crypto/tls"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 	"time"
@@ -30,8 +29,8 @@ type MumbleDJ struct {
 	Cache        *Cache
 	Skips        *SkipTracker
 	Commander    *Commander
-	Log          *log.Logger
 	KeepAlive    chan bool
+	Version      string
 }
 
 // DJ is a struct that keeps track of all aspects of MumbleDJ's environment.
@@ -48,11 +47,9 @@ func NewMumbleDJ() *MumbleDJ {
 	dj.Queue = NewQueue()
 	dj.Cache = NewCache()
 	dj.Skips = NewSkipTracker()
-	// TODO: Allow for redirection of log output.
-	dj.Log = log.New(os.Stderr, "MumbleDJ", 0)
 
 	if err := dj.CheckDependencies(); err != nil {
-		dj.Log.Fatalln(err.Error())
+		Error.Fatalln(err.Error())
 	}
 
 	return dj
@@ -80,15 +77,15 @@ func (dj *MumbleDJ) OnConnect(e *gumble.ConnectEvent) {
 func (dj *MumbleDJ) OnDisconnect(e *gumble.DisconnectEvent) {
 	if dj.BotConfig.Connection.RetryEnabled &&
 		(e.Type == gumble.DisconnectError || e.Type == gumble.DisconnectKicked) {
-		dj.Log.Printf("Disconnected from server. Retrying connection every %d seconds %d times.\n",
+		Warn.Printf("Disconnected from server. Retrying connection every %d seconds %d times.\n",
 			dj.BotConfig.Connection.RetryInterval,
 			dj.BotConfig.Connection.RetryAttempts)
 
 		success := false
 		for retries := 0; retries < dj.BotConfig.Connection.RetryAttempts; retries++ {
-			dj.Log.Println("Retrying connection...")
+			Info.Println("Retrying connection...")
 			if err := dj.Client.Connect(); err == nil {
-				dj.Log.Println("Successfully reconnected to the server!")
+				Info.Println("Successfully reconnected to the server!")
 				success = true
 				break
 			}
@@ -96,11 +93,11 @@ func (dj *MumbleDJ) OnDisconnect(e *gumble.DisconnectEvent) {
 		}
 		if !success {
 			dj.KeepAlive <- true
-			dj.Log.Fatalln("Could not reconnect to server. Exiting...")
+			Error.Fatalln("Could not reconnect to server. Exiting...")
 		}
 	} else {
 		dj.KeepAlive <- true
-		dj.Log.Fatalln("Disconnected from server. No reconnect attempts will be made.")
+		Error.Fatalln("Disconnected from server. No reconnect attempts will be made.")
 	}
 }
 

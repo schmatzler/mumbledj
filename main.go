@@ -8,14 +8,25 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/codegangsta/cli"
 	"github.com/matthieugrieger/mumbledj/bot"
+	"github.com/matthieugrieger/mumbledj/commands"
 )
 
 // DJ is a global variable that holds various details about the bot's state.
 var DJ *bot.MumbleDJ
+
+// Warn is a global logger that logs warn messages.
+var Warn *log.Logger
+
+// Error is a global logger that logs error messages.
+var Error *log.Logger
+
+// Info is a global logger that logs info messages.
+var Info *log.Logger
 
 func main() {
 	DJ = bot.NewMumbleDJ()
@@ -24,6 +35,23 @@ func main() {
 	app.Name = "MumbleDJ"
 	app.Usage = "A Mumble bot that plays audio from various media sites."
 	app.Version = "3.0.0-alpha"
+	DJ.Version = app.Version
+
+	// TODO: Allow user to redirect log output.
+	Warn = log.New(os.Stdout, "MumbleDJ WARN:", 0)
+	Error = log.New(os.Stdout, "MumbleDJ ERROR:", 0)
+	Info = log.New(os.Stdout, "MumbleDJ INFO:", 0)
+
+	// Injection into sub-packages.
+	commands.DJ = DJ
+	commands.Warn = Warn
+	commands.Error = Error
+	commands.Info = Info
+
+	bot.Warn = Warn
+	bot.Error = Error
+	bot.Info = Info
+
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "server, s",
@@ -82,6 +110,6 @@ func main() {
 	app.Run(os.Args)
 
 	if err := DJ.Connect(); err != nil {
-		DJ.Log.Fatalf("\nA fatal error occurred: %s", err.Error())
+		Error.Fatalf("\nA fatal error occurred: %s", err.Error())
 	}
 }
