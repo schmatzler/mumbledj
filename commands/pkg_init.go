@@ -32,6 +32,7 @@ var Commands []interfaces.Command
 func init() {
 	Commands = []interfaces.Command{
 		new(CacheSizeCommand),
+		new(CurrentTrackCommand),
 		new(VersionCommand),
 	}
 }
