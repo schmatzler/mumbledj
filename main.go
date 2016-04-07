@@ -30,7 +30,7 @@ var Error = log.New(ioutil.Discard, "MumbleDJ ERROR: ", 0)
 var Info = log.New(ioutil.Discard, "MumbleDJ INFO: ", 0)
 
 func init() {
-	DJ.Commands = commands.DJ.Commands
+	DJ.Commands = commands.Commands
 
 	// Injection into sub-packages.
 	commands.DJ = DJ

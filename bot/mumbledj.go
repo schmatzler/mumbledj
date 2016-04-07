@@ -116,8 +116,8 @@ func (dj *MumbleDJ) OnTextMessage(e *gumble.TextMessageEvent) {
 			plainMessage != dj.BotConfig.General.CommandPrefix {
 			message, isPrivateMessage, err := dj.FindAndExecuteCommand(e.Sender, plainMessage[1:])
 			if err != nil {
-				Warn.Printf("Sending error message to %s...\n", e.Sender.Name)
-				dj.SendPrivateMessage(e.Sender, fmt.Sprintf("An error occurred while executing your command: %s", err.Error()))
+				Warn.Printf("Sending error message (%s) to %s...\n", err.Error(), e.Sender.Name)
+				dj.SendPrivateMessage(e.Sender, fmt.Sprintf("<b>Error:</b> %s.", err.Error()))
 			} else {
 				if isPrivateMessage {
 					Info.Printf("Sending private message to %s...\n", e.Sender.Name)
@@ -203,19 +203,6 @@ func (dj *MumbleDJ) Connect() error {
 
 	Info.Println("Connected to server!")
 
-	return nil
-}
-
-// RegisterCommand adds a new command to the list commands.
-func (dj *MumbleDJ) RegisterCommand(command interfaces.Command) error {
-	if len(dj.Commands) != 0 {
-		for _, existingCommand := range dj.Commands {
-			if command == existingCommand {
-				return errors.New("This command has already been registered")
-			}
-		}
-	}
-	dj.Commands = append(dj.Commands, command)
 	return nil
 }
 
