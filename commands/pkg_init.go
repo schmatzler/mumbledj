@@ -39,6 +39,7 @@ func init() {
 		new(KillCommand),
 		new(ListTracksCommand),
 		new(MoveCommand),
+		new(NextTrackCommand),
 		new(VersionCommand),
 	}
 }
