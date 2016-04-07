@@ -237,6 +237,7 @@ func (dj *MumbleDJ) findCommand(message string) (interfaces.Command, error) {
 func (dj *MumbleDJ) executeCommand(user *gumble.User, message string, command interfaces.Command) (string, bool, error) {
 	canExecute := false
 	if dj.BotConfig.Permissions.Enabled && command.IsAdminCommand() {
+		// TODO: This currently hangs. Need to figure out why this is happening.
 		userGroups := <-gumbleutil.UserGroups(dj.Client, user, dj.Client.Self.Channel)
 		for _, userGroup := range userGroups {
 			if userGroup == dj.BotConfig.Permissions.UserGroup {
