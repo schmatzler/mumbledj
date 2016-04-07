@@ -36,6 +36,7 @@ func init() {
 		new(ForceSkipCommand),
 		new(ForceSkipPlaylistCommand),
 		new(HelpCommand),
+		new(KillCommand),
 		new(VersionCommand),
 	}
 }
