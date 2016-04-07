@@ -67,8 +67,11 @@ func (dj *MumbleDJ) OnConnect(e *gumble.ConnectEvent) {
 	dj.Client.Self.SetComment(dj.BotConfig.General.DefaultComment)
 
 	if dj.BotConfig.Cache.Enabled {
+		Info.Println("Caching enabled.")
 		dj.Cache.UpdateStatistics()
 		go dj.Cache.CleanPeriodically()
+	} else {
+		Info.Println("Caching disabled.")
 	}
 }
 
@@ -110,11 +113,14 @@ func (dj *MumbleDJ) OnTextMessage(e *gumble.TextMessageEvent) {
 			plainMessage != dj.BotConfig.General.CommandPrefix {
 			message, isPrivateMessage, err := dj.Commander.FindAndExecuteCommand(e.Sender, plainMessage[1:])
 			if err != nil {
+				Warn.Printf("Sending error message to %s...\n", e.Sender.Name)
 				dj.SendPrivateMessage(e.Sender, fmt.Sprintf("An error occurred while executing your command: %s", err.Error()))
 			} else {
 				if isPrivateMessage {
+					Info.Printf("Sending private message to %s...\n", e.Sender.Name)
 					dj.SendPrivateMessage(e.Sender, message)
 				} else {
+					Info.Printf("Sending message to %s...\n", dj.Client.Self.Channel.Name)
 					dj.Client.Self.Channel.Send(message, false)
 				}
 			}
@@ -126,6 +132,7 @@ func (dj *MumbleDJ) OnTextMessage(e *gumble.TextMessageEvent) {
 // reflect the current status of the users on the server.
 func (dj *MumbleDJ) OnUserChange(e *gumble.UserChangeEvent) {
 	if e.Type.Has(gumble.UserChangeDisconnected) || e.Type.Has(gumble.UserChangeChannel) {
+		Info.Printf("%s has disconnected or changed channels, updating skip trackers...\n", e.User.Name)
 		dj.Skips.RemoveTrackSkip(e.User)
 		dj.Skips.RemovePlaylistSkip(e.User)
 	}
@@ -186,9 +193,12 @@ func (dj *MumbleDJ) Connect() error {
 	})
 	dj.Client.Attach(gumbleutil.AutoBitrate)
 
+	Info.Printf("Attempting connection to %s:%s...\n", dj.BotConfig.Connection.Address, dj.BotConfig.Connection.Port)
 	if err := dj.Client.Connect(); err != nil {
 		return err
 	}
+
+	Info.Println("Connected to server!")
 
 	<-dj.KeepAlive
 
