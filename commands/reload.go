@@ -1,7 +1,7 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * commands/currenttrack.go
+ * commands/reload.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
