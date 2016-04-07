@@ -150,6 +150,19 @@ func (dj *MumbleDJ) SendPrivateMessage(user *gumble.User, message string) {
 	}
 }
 
+// IsAdmin checks whether a particular Mumble user is a MumbleDJ admin.
+// Returns true if the user is an admin, and false otherwise.
+func (dj *MumbleDJ) IsAdmin(user *gumble.User) bool {
+	// TODO: This currently hangs. Need to figure out why this is happening.
+	userGroups := <-gumbleutil.UserGroups(dj.Client, user, dj.Client.Self.Channel)
+	for _, userGroup := range userGroups {
+		if userGroup == dj.BotConfig.Permissions.UserGroup {
+			return true
+		}
+	}
+	return false
+}
+
 // CheckDependencies checks whether or not the dependencies for MumbleDJ
 // (most notably youtube-dl) are installed and executable. Returns nil if
 // no dependencies are misconfigured/missing, returns an error otherwise
@@ -237,13 +250,7 @@ func (dj *MumbleDJ) findCommand(message string) (interfaces.Command, error) {
 func (dj *MumbleDJ) executeCommand(user *gumble.User, message string, command interfaces.Command) (string, bool, error) {
 	canExecute := false
 	if dj.BotConfig.Permissions.Enabled && command.IsAdminCommand() {
-		// TODO: This currently hangs. Need to figure out why this is happening.
-		userGroups := <-gumbleutil.UserGroups(dj.Client, user, dj.Client.Self.Channel)
-		for _, userGroup := range userGroups {
-			if userGroup == dj.BotConfig.Permissions.UserGroup {
-				canExecute = true
-			}
-		}
+		canExecute = dj.IsAdmin(user)
 	} else {
 		canExecute = true
 	}
