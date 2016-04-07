@@ -217,7 +217,7 @@ func NewConfig() *Config {
 	}
 	permissionsConfig := PermissionsConfig{
 		Enabled:           true,
-		UserGroup:         "admins",
+		UserGroup:         "mumbledj_admins",
 		Add:               false,
 		AddNext:           true,
 		AddPlaylist:       false,

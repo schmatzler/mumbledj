@@ -241,7 +241,7 @@ permissions:
   enabled: true
 
   # Mumble user group in which admins are stored
-  user_group: admins
+  user_group: mumbledj_admins
 
   # Make add an admin command?
   add: false
