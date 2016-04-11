@@ -47,6 +47,7 @@ func init() {
 		new(SetCommentCommand),
 		new(ShuffleCommand),
 		new(SkipCommand),
+		new(SkipPlaylistCommand),
 		new(VersionCommand),
 	}
 }
