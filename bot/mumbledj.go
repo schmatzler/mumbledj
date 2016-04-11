@@ -33,6 +33,7 @@ type MumbleDJ struct {
 	Commands     []interfaces.Command
 	KeepAlive    chan bool
 	Version      string
+	Volume       float32
 }
 
 // DJ is a struct that keeps track of all aspects of MumbleDJ's environment.
@@ -66,6 +67,7 @@ func (dj *MumbleDJ) OnConnect(e *gumble.ConnectEvent) {
 	}
 
 	dj.AudioStream = nil
+	dj.Volume = dj.BotConfig.Volume.Default
 
 	dj.Client.Self.SetComment(dj.BotConfig.General.DefaultComment)
 
