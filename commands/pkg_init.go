@@ -48,6 +48,7 @@ func init() {
 		new(ShuffleCommand),
 		new(SkipCommand),
 		new(SkipPlaylistCommand),
+		new(ToggleShuffleCommand),
 		new(VersionCommand),
 	}
 }
