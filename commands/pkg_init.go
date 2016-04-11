@@ -46,6 +46,7 @@ func init() {
 		new(ResetCommand),
 		new(SetCommentCommand),
 		new(ShuffleCommand),
+		new(SkipCommand),
 		new(VersionCommand),
 	}
 }
