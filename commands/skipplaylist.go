@@ -1,7 +1,7 @@
 /*
  * MumbleDJ
  * By Matthieu Grieger
- * commands/setcomment.go
+ * commands/skipplaylist.go
  * Copyright (c) 2016 Matthieu Grieger (MIT License)
  */
 
