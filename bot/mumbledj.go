@@ -34,6 +34,7 @@ type MumbleDJ struct {
 	KeepAlive    chan bool
 	Version      string
 	Volume       float32
+	YouTubeDL    *YouTubeDL
 }
 
 // DJ is a struct that keeps track of all aspects of MumbleDJ's environment.
