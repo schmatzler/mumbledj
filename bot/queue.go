@@ -9,6 +9,7 @@ package bot
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -32,15 +33,22 @@ func NewQueue() *Queue {
 	}
 }
 
-// AddTracks adds a number of tracks to the queue.
-func (q *Queue) AddTracks(t ...interfaces.Track) error {
+// AddTrack adds a track to the back of the queue.
+func (q *Queue) AddTrack(t interfaces.Track) error {
 	beforeLen := len(q.Queue)
-	tracksAdded := 0
-	for _, track := range t {
-		q.Queue = append(q.Queue, track)
-		tracksAdded++
+
+	// An error should never occur here since maxTrackDuration is restricted to
+	// ints. Any error in the configuration will be caught during yaml load.
+	maxTrackDuration, _ := time.ParseDuration(fmt.Sprintf("%ds",
+		DJ.BotConfig.General.MaxTrackDuration))
+
+	if DJ.BotConfig.General.MaxTrackDuration == 0 ||
+		t.Duration() <= maxTrackDuration {
+		q.Queue = append(q.Queue, t)
+	} else {
+		return errors.New("The track is too long to add to the queue")
 	}
-	if len(q.Queue) == beforeLen+tracksAdded {
+	if len(q.Queue) == beforeLen+1 {
 		return nil
 	}
 	return errors.New("Could not add track to queue")
