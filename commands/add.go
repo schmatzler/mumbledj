@@ -46,6 +46,7 @@ func (c *AddCommand) IsAdminCommand() bool {
 //    return "This is a private message!", true, nil
 func (c *AddCommand) Execute(user *gumble.User, args ...string) (string, bool, error) {
 	var allTracks []interfaces.Track
+	tracksTooLong := ""
 
 	if len(args) == 0 {
 		return "", true, errors.New("A URL must be supplied with the add command")
@@ -66,9 +67,17 @@ func (c *AddCommand) Execute(user *gumble.User, args ...string) (string, bool, e
 		user.Name, len(allTracks))
 
 	for _, track := range allTracks {
-		DJ.Queue.AddTracks(track)
-		addString += fmt.Sprintf("\"%s\" from %s </br>",
-			track.Title(), track.Service())
+		if err := DJ.Queue.AddTrack(track); err != nil {
+			tracksTooLong += fmt.Sprintf("\"%s\" from %s </br>",
+				track.Title(), track.Service())
+		} else {
+			addString += fmt.Sprintf("\"%s\" from %s </br>",
+				track.Title(), track.Service())
+		}
+	}
+
+	if len(tracksTooLong) != 0 {
+		addString += "</br>The following tracks could not be added due to error or because they are too long:</br>" + tracksTooLong
 	}
 
 	return addString, false, nil
