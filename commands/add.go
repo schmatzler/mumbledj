@@ -69,10 +69,10 @@ func (c *AddCommand) Execute(user *gumble.User, args ...string) (string, bool, e
 	for _, track := range allTracks {
 		if err := DJ.Queue.AddTrack(track); err != nil {
 			tracksTooLong += fmt.Sprintf("\"%s\" from %s </br>",
-				track.Title(), track.Service())
+				track.GetTitle(), track.GetService())
 		} else {
 			addString += fmt.Sprintf("\"%s\" from %s </br>",
-				track.Title(), track.Service())
+				track.GetTitle(), track.GetService())
 		}
 	}
 

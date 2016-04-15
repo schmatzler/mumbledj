@@ -64,7 +64,7 @@ func (c *ListTracksCommand) Execute(user *gumble.User, args ...string) (string, 
 	DJ.Queue.Traverse(func(i int, track interfaces.Track) {
 		if i < numTracksToList {
 			buffer.WriteString(fmt.Sprintf("%d: \"%s\", added by <b>%s</b>.</br>",
-				i+1, track.Title(), track.Submitter()))
+				i+1, track.GetTitle(), track.GetSubmitter()))
 		}
 	})
 

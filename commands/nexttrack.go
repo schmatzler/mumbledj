@@ -54,5 +54,5 @@ func (c *NextTrackCommand) Execute(user *gumble.User, args ...string) (string, b
 	nextTrack := DJ.Queue.Queue[1]
 
 	return fmt.Sprintf("The next track is \"%s\", added by <b>%s</b>.",
-		nextTrack.Title(), nextTrack.Submitter()), true, nil
+		nextTrack.GetTitle(), nextTrack.GetSubmitter()), true, nil
 }

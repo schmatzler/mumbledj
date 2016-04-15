@@ -43,7 +43,7 @@ func (q *Queue) AddTrack(t interfaces.Track) error {
 		DJ.BotConfig.General.MaxTrackDuration))
 
 	if DJ.BotConfig.General.MaxTrackDuration == 0 ||
-		t.Duration() <= maxTrackDuration {
+		t.GetDuration() <= maxTrackDuration {
 		q.Queue = append(q.Queue, t)
 	} else {
 		return errors.New("The track is too long to add to the queue")
@@ -104,10 +104,10 @@ func (q *Queue) Skip() {
 // SkipPlaylist performs the necessary actions that take place when a playlist
 // is skipped via a command.
 func (q *Queue) SkipPlaylist() {
-	if playlist, err := q.Queue[0].Playlist(); err == nil {
+	if playlist, err := q.Queue[0].GetPlaylist(); err == nil {
 		currentPlaylistID := playlist.ID()
 		for i, track := range q.Queue {
-			if otherTrackPlaylist, err := track.Playlist(); err == nil {
+			if otherTrackPlaylist, err := track.GetPlaylist(); err == nil {
 				if otherTrackPlaylist.ID() == currentPlaylistID {
 					q.Queue = append(q.Queue[:i], q.Queue[i+1:]...)
 				}

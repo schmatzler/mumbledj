@@ -51,5 +51,5 @@ func (c *CurrentTrackCommand) Execute(user *gumble.User, args ...string) (string
 	currentTrack := DJ.Queue.Queue[0]
 
 	return fmt.Sprintf("The current track is <b>%s</b>, added by <b>%s</b>.",
-		currentTrack.Title(), currentTrack.Submitter()), true, nil
+		currentTrack.GetTitle(), currentTrack.GetSubmitter()), true, nil
 }

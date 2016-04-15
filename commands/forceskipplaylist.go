@@ -47,7 +47,7 @@ func (c *ForceSkipPlaylistCommand) Execute(user *gumble.User, args ...string) (s
 	if len(DJ.Queue.Queue) == 0 {
 		return "", true, errors.New("The queue is currently empty. There are no playlists to skip")
 	}
-	if _, err := DJ.Queue.Queue[0].Playlist(); err != nil {
+	if _, err := DJ.Queue.Queue[0].GetPlaylist(); err != nil {
 		return "", true, errors.New("The current track is not part of a playlist")
 	}
 
