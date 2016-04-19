@@ -199,7 +199,7 @@ func NewConfig() *Config {
 		ForceSkip:         []string{"forceskip", "fs"},
 		ForceSkipPlaylist: []string{"forceskipplaylist", "fsp"},
 		Help:              []string{"help", "h"},
-		Volume:            []string{"volume", "vol", "v"},
+		Volume:            []string{"volume", "vol"},
 		Move:              []string{"move", "m"},
 		Reload:            []string{"reload", "r"},
 		Reset:             []string{"reset", "re"},
