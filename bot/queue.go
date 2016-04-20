@@ -105,10 +105,10 @@ func (q *Queue) Skip() {
 // is skipped via a command.
 func (q *Queue) SkipPlaylist() {
 	if playlist, err := q.Queue[0].GetPlaylist(); err == nil {
-		currentPlaylistID := playlist.ID()
+		currentPlaylistID := playlist.GetID()
 		for i, track := range q.Queue {
 			if otherTrackPlaylist, err := track.GetPlaylist(); err == nil {
-				if otherTrackPlaylist.ID() == currentPlaylistID {
+				if otherTrackPlaylist.GetID() == currentPlaylistID {
 					q.Queue = append(q.Queue[:i], q.Queue[i+1:]...)
 				}
 			}
