@@ -11,46 +11,46 @@ import "time"
 
 // Playlist stores all metadata related to a playlist of tracks.
 type Playlist struct {
-	pID        string
-	pTitle     string
-	pAuthor    string
-	pSubmitter string
-	pService   string
-	pDuration  time.Duration
-	pNumTracks int
+	ID        string
+	Title     string
+	Author    string
+	Submitter string
+	Service   string
+	Duration  time.Duration
+	NumTracks int
 }
 
-// ID returns the ID of the playlist.
-func (p *Playlist) ID() string {
-	return p.pID
+// GetID returns the ID of the playlist.
+func (p *Playlist) GetID() string {
+	return p.ID
 }
 
-// Title returns the title of the playlist.
-func (p *Playlist) Title() string {
-	return p.pTitle
+// GetTitle returns the title of the playlist.
+func (p *Playlist) GetTitle() string {
+	return p.Title
 }
 
-// Author returns the author of the playlist.
-func (p *Playlist) Author() string {
-	return p.pAuthor
+// GetAuthor returns the author of the playlist.
+func (p *Playlist) GetAuthor() string {
+	return p.Author
 }
 
-// Submitter returns the submitter of the playlist.
-func (p *Playlist) Submitter() string {
-	return p.pSubmitter
+// GetSubmitter returns the submitter of the playlist.
+func (p *Playlist) GetSubmitter() string {
+	return p.Submitter
 }
 
-// Service returns the name of the service from which the playlist was retrieved from.
-func (p *Playlist) Service() string {
-	return p.pService
+// GetService returns the name of the service from which the playlist was retrieved from.
+func (p *Playlist) GetService() string {
+	return p.Service
 }
 
-// Duration returns the duration of the playlist.
-func (p *Playlist) Duration() time.Duration {
-	return p.pDuration
+// GetDuration returns the duration of the playlist.
+func (p *Playlist) GetDuration() time.Duration {
+	return p.Duration
 }
 
-// NumTracks returns the number of tracks in the playlist.
-func (p *Playlist) NumTracks() int {
-	return p.pNumTracks
+// GetNumTracks returns the number of tracks in the playlist.
+func (p *Playlist) GetNumTracks() int {
+	return p.NumTracks
 }
