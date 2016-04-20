@@ -10,7 +10,6 @@ package bot
 import (
 	"testing"
 
-	"github.com/matthieugrieger/mumbledj/bot"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -21,23 +20,23 @@ type MockedQueueItem struct {
 
 type QueueTestSuite struct {
 	suite.Suite
-	FirstItem  MockedQueueItem
-	SecondItem MockedQueueItem
-	ThirdItem  MockedQueueItem
+	FirstItem  *MockedQueueItem
+	SecondItem *MockedQueueItem
+	ThirdItem  *MockedQueueItem
 }
 
 func (suite *QueueTestSuite) SetupSuite() {
-	DJ = bot.NewMumbleDJ()
+	DJ = NewMumbleDJ()
 
 	DJ.BotConfig.General.AutomaticShuffleOn = false
 
-	suite.FirstItem = MockedQueueItem{Identifier: "first"}
-	suite.SecondItem = MockedQueueItem{Identifier: "second"}
-	suite.ThirdItem = MockedQueueItem{Identifier: "third"}
+	suite.FirstItem = &MockedQueueItem{Identifier: "first"}
+	suite.SecondItem = &MockedQueueItem{Identifier: "second"}
+	suite.ThirdItem = &MockedQueueItem{Identifier: "third"}
 }
 
 func (suite *QueueTestSuite) SetupTest() {
-	DJ.Queue = bot.NewQueue()
+	DJ.Queue = NewQueue()
 }
 
 func (suite *QueueTestSuite) TestNewQueue() {
