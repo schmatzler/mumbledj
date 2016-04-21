@@ -54,17 +54,32 @@ func (q *Queue) AddTrack(t interfaces.Track) error {
 	return errors.New("Could not add track to queue")
 }
 
+// CurrentTrack returns the current Track.
+func (q *Queue) CurrentTrack() (interfaces.Track, error) {
+	if len(q.Queue) != 0 {
+		return q.Queue[0], nil
+	}
+	return nil, errors.New("There are no tracks currently in the queue")
+}
+
 // PeekNextTrack peeks at the next track and returns it.
-// TODO: Implement after Config.
 func (q *Queue) PeekNextTrack() (interfaces.Track, error) {
-	return nil, nil
+	if len(q.Queue) > 1 {
+		if DJ.BotConfig.General.AutomaticShuffleOn {
+			q.RandomNextTrack(false)
+		}
+		return q.Queue[1], nil
+	}
+	return nil, errors.New("There is no track coming up next")
 }
 
 // Traverse is a traversal function for Queue. Allows a visit function to
 // be passed in which performs the specified action on each queue item.
 func (q *Queue) Traverse(visit func(i int, t interfaces.Track)) {
-	for tQueue, queueTrack := range q.Queue {
-		visit(tQueue, queueTrack)
+	if len(q.Queue) > 0 {
+		for queueIndex, queueTrack := range q.Queue {
+			visit(queueIndex, queueTrack)
+		}
 	}
 }
 
@@ -75,12 +90,6 @@ func (q *Queue) ShuffleTracks() {
 		j := rand.Intn(i + 1)
 		q.Queue[i+1], q.Queue[j+1] = q.Queue[j+1], q.Queue[i+1]
 	}
-}
-
-// NextTrack removes the current track from the queue, making the next track
-// the current one.
-func (q *Queue) NextTrack() {
-	q.Queue = q.Queue[1:]
 }
 
 // RandomNextTrack sets a random track as the next track to be played.
@@ -98,7 +107,11 @@ func (q *Queue) RandomNextTrack(queueWasEmpty bool) {
 // Skip performs the necessary actions that take place when a track is skipped
 // via a command.
 func (q *Queue) Skip() {
-	q.NextTrack()
+	if len(q.Queue) > 1 {
+		q.nextTrack()
+	} else {
+		q.Queue = make([]interfaces.Track, 0)
+	}
 }
 
 // SkipPlaylist performs the necessary actions that take place when a playlist
@@ -106,12 +119,18 @@ func (q *Queue) Skip() {
 func (q *Queue) SkipPlaylist() {
 	if playlist, err := q.Queue[0].GetPlaylist(); err == nil {
 		currentPlaylistID := playlist.GetID()
-		for i, track := range q.Queue {
-			if otherTrackPlaylist, err := track.GetPlaylist(); err == nil {
+
+		// We must loop backwards to prevent missing any elements after deletion.
+		for i := len(q.Queue) - 1; i >= 0; i-- {
+			if otherTrackPlaylist, err := q.Queue[i].GetPlaylist(); err == nil {
 				if otherTrackPlaylist.GetID() == currentPlaylistID {
 					q.Queue = append(q.Queue[:i], q.Queue[i+1:]...)
 				}
 			}
 		}
 	}
+}
+
+func (q *Queue) nextTrack() {
+	q.Queue = q.Queue[1:]
 }
