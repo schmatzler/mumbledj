@@ -9,6 +9,7 @@ package bot
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 	"time"
 
@@ -36,6 +37,9 @@ func (suite *QueueTestSuite) SetupSuite() {
 func (suite *QueueTestSuite) SetupTest() {
 	DJ.Queue = NewQueue()
 	DJ.BotConfig.General.MaxTrackDuration = 0
+
+	// Override the initialized seed for consistent test results.
+	rand.Seed(1)
 }
 
 func (suite *QueueTestSuite) TestNewQueue() {
@@ -148,9 +152,6 @@ func (suite *QueueTestSuite) TestShuffleTracks() {
 
 	DJ.Queue.AddTrack(suite.ThirdTrack)
 
-	// With this many tracks it is very unlikely that the shuffled queue will be identical to the original.
-	// However, it is still possible for this test to fail occasionally. Increase the number of tracks added
-	// to the queue if this occurs by changing the maximum value of the loop counter.
 	for i := 0; i < 10; i++ {
 		DJ.Queue.AddTrack(&Track{ID: fmt.Sprintf("%d", i+4)})
 	}
@@ -168,8 +169,6 @@ func (suite *QueueTestSuite) TestRandomNextTrackWhenQueueWasEmpty() {
 
 	suite.Equal(suite.FirstTrack, DJ.Queue.Queue[0], "RandomNextTrack shouldn't do anything when there is only one track in the queue.")
 
-	// See above comment for potential problems related to testing methods with
-	// randomness built-in.
 	for i := 0; i < 25; i++ {
 		DJ.Queue.AddTrack(&Track{ID: fmt.Sprintf("%d", i+1)})
 	}
@@ -191,8 +190,6 @@ func (suite *QueueTestSuite) TestRandomNextTrackWhenQueueWasNotEmpty() {
 	suite.Equal(suite.FirstTrack, DJ.Queue.Queue[0], "RandomNextTrack shouldn't do anything when there is only two tracks in the queue and the queue was not previously empty.")
 	suite.Equal(suite.SecondTrack, DJ.Queue.Queue[1], "RandomNextTrack shouldn't do anything when there is only two tracks in the queue and the queue was not previously empty.")
 
-	// See above comment for potential problems related to testing methods with
-	// randomness built-in.
 	for i := 0; i < 25; i++ {
 		DJ.Queue.AddTrack(&Track{ID: fmt.Sprintf("%d", i+2)})
 	}
