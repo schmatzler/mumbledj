@@ -104,13 +104,13 @@ func FindServiceAndAdd(user *gumble.User, url string) error {
 			}
 		}
 
-		// Alert channel of added song/playlist
+		// Alert user of added song/playlist
 		if songsAdded == 0 {
 			return errors.New(fmt.Sprintf(TRACK_TOO_LONG_MSG, urlService.ServiceName()))
 		} else if songsAdded == 1 {
-			dj.client.Self.Channel.Send(fmt.Sprintf(SONG_ADDED_HTML, user.Name, title), false)
+			dj.SendPrivateMessage(user, fmt.Sprintf(SONG_ADDED_HTML, user.Name, title))
 		} else {
-			dj.client.Self.Channel.Send(fmt.Sprintf(PLAYLIST_ADDED_HTML, user.Name, title), false)
+			dj.SendPrivateMessage(user, fmt.Sprintf(PLAYLIST_ADDED_HTML, user.Name, title))
 		}
 
 		// Starts playing the new song if nothing else is playing
@@ -179,13 +179,13 @@ func FindServiceAndInsertNext(user *gumble.User, url string) error {
 			}
 		}
 
-		// Alert channel of added song/playlist
+		// Alert user of added song/playlist
 		if songsAdded == 0 {
 			return errors.New(fmt.Sprintf(TRACK_TOO_LONG_MSG, urlService.ServiceName()))
 		} else if songsAdded == 1 {
-			dj.client.Self.Channel.Send(fmt.Sprintf(NEXT_SONG_ADDED_HTML, user.Name, title), false)
+			dj.SendPrivateMessage(user, fmt.Sprintf(NEXT_SONG_ADDED_HTML, user.Name, title))
 		} else {
-			dj.client.Self.Channel.Send(fmt.Sprintf(NEXT_PLAYLIST_ADDED_HTML, user.Name, title), false)
+			dj.SendPrivateMessage(user, fmt.Sprintf(NEXT_PLAYLIST_ADDED_HTML, user.Name, title))
 		}
 
 		return nil
