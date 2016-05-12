@@ -7,7 +7,13 @@
 
 package bot
 
-import "github.com/matthieugrieger/mumbledj/interfaces"
+import (
+	"errors"
+	"os/exec"
+	"sync"
+
+	"github.com/antonholmquist/jason"
+)
 
 // YouTubeDL is a struct that gathers all methods related to the youtube-dl
 // software.
@@ -15,7 +21,74 @@ import "github.com/matthieugrieger/mumbledj/interfaces"
 type YouTubeDL struct {
 }
 
+// CheckInstallation attempts to execute the version command for youtube-dl.
+// If this command fails then youtube-dl is either not installed or is not
+// accessible in the user's path.
+func (yt *YouTubeDL) CheckInstallation() error {
+	command := exec.Command("youtube-dl", "--version")
+	if err := command.Run(); err != nil {
+		return errors.New("youtube-dl is not properly installed")
+	}
+	return nil
+}
+
 // GetTracks returns track objects retrieved from the provided URL.
-func (yt *YouTubeDL) GetTracks(url string) ([]interfaces.Track, error) {
+func (yt *YouTubeDL) GetTracks(url string) ([]*Track, error) {
+	var (
+		jsonBytes  []byte
+		err        error
+		json       *jason.Object
+		extractor  string
+		isPlaylist bool
+	)
+
+	command := exec.Command("youtube-dl", "--dump-json", "--flat-playlist", url)
+	jsonBytes, err = command.Output()
+	if err != nil {
+		return nil, err
+	}
+
+	json, err = jason.NewObjectFromBytes(jsonBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	extractor, err = json.GetString("extractor")
+	if err != nil {
+		// We may have a playlist, which has a different json key; check for it.
+		// If successful, we can set isPlaylist to true.
+		extractor, err = json.GetString("ie_key")
+		if err != nil {
+			return nil, errors.New("The service you attempted to use is not supported by youtube-dl")
+		}
+		isPlaylist = true
+	}
+
+	if !yt.isWhitelisted(extractor) {
+		return nil, errors.New("The service you attempted to use is not whitelisted")
+	}
+
+	if isPlaylist {
+		// Multiple webpages must be fetched and parsed. To speed this up, separate
+		// goroutines are spawned to handle each track of the playlist.
+		var waitGroup sync.WaitGroup
+	} else {
+		// Only one webpage must be fetched and parsed, no goroutines are necessary.
+		track := yt.createTrack(json)
+	}
+
 	return nil, nil
+}
+
+func (yt *YouTubeDL) isWhitelisted(extractor string) bool {
+	for _, whitelistedExtractor := range DJ.BotConfig.Services.Whitelist {
+		if extractor == whitelistedExtractor {
+			return true
+		}
+	}
+	return false
+}
+
+func (yt *YouTubeDL) createTrack(json *jason.Object) *Track {
+	return nil
 }
