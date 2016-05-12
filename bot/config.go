@@ -139,6 +139,11 @@ type DescriptionsConfig struct {
 	Version           string `yaml:"version"`
 }
 
+// ServicesConfig holds service configuration values.
+type ServicesConfig struct {
+	Whitelist []string `yaml:"whitelist"`
+}
+
 // Config gathers all logic related to configuration via commandline arguments
 // and configuration files.
 type Config struct {
@@ -150,6 +155,7 @@ type Config struct {
 	Aliases            AliasesConfig      `yaml:"aliases"`
 	Permissions        PermissionsConfig  `yaml:"permissions"`
 	Descriptions       DescriptionsConfig `yaml:"descriptions"`
+	Services           ServicesConfig     `yaml:"services"`
 }
 
 // NewConfig returns a new config populated with default values.
@@ -266,6 +272,9 @@ func NewConfig() *Config {
 		ListTracks:        "Outputs a list of the tracks currently in the queue.",
 		Version:           "Outputs the current version of MumbleDJ.",
 	}
+	servicesConfig := ServicesConfig{
+		Whitelist: []string{"youtube", "soundcloud", "mixcloud"},
+	}
 
 	return &Config{
 		ConfigFileLocation: "~/.mumbledj/config.yaml", // TODO: Set to $XDG_CONFIG_HOME
@@ -276,6 +285,7 @@ func NewConfig() *Config {
 		Aliases:            aliasesConfig,
 		Permissions:        permissionsConfig,
 		Descriptions:       descriptionsConfig,
+		Services:           servicesConfig,
 	}
 }
 

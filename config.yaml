@@ -376,3 +376,14 @@ descriptions:
 
   # Description for version command
   version: Outputs the current version of MumbleDJ.
+  
+
+services:
+
+  # Service whitelist. All services that are listed here will be enabled in the bot.
+  # Available services can be found at the following URL:
+  # https://github.com/rg3/youtube-dl/blob/master/docs/supportedsites.md
+  whitelist:
+    - youtube
+    - soundcloud
+    - mixcloud
