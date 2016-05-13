@@ -253,7 +253,7 @@ func skip(user *gumble.User, admin, playlistSkip bool) {
 						dj.client.Self.Channel.Send(fmt.Sprintf(PLAYLIST_SUBMITTER_SKIP_HTML, user.Name), false)
 						submitterSkipped = true
 					} else {
-						dj.client.Self.Channel.Send(fmt.Sprintf(PLAYLIST_SKIP_ADDED_HTML, user.Name), false)
+						dj.SendPrivateMessage(user, fmt.Sprintf(PLAYLIST_SKIP_ADDED_HTML, user.Name))
 					}
 					if submitterSkipped || dj.queue.CurrentSong().Playlist().SkipReached(len(dj.client.Self.Channel.Users)) || admin {
 						id := dj.queue.CurrentSong().Playlist().ID()
@@ -290,7 +290,7 @@ func skip(user *gumble.User, admin, playlistSkip bool) {
 					dj.client.Self.Channel.Send(fmt.Sprintf(SUBMITTER_SKIP_HTML, user.Name), false)
 					submitterSkipped = true
 				} else {
-					dj.client.Self.Channel.Send(fmt.Sprintf(SKIP_ADDED_HTML, user.Name), false)
+					dj.SendPrivateMessage(user, fmt.Sprintf(SKIP_ADDED_HTML, user.Name))
 				}
 				if submitterSkipped || dj.queue.CurrentSong().SkipReached(len(dj.client.Self.Channel.Users)) || admin {
 					if !(submitterSkipped || admin) {
