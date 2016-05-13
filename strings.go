@@ -57,10 +57,10 @@ const NOT_IN_VOLUME_RANGE_MSG = "Out of range. The volume must be between %f and
 const CONFIG_RELOAD_SUCCESS_MSG = "The configuration has been successfully reloaded."
 
 // Message shown to users when an admin skips a song.
-const ADMIN_SONG_SKIP_MSG = "An admin has decided to skip the current song."
+const ADMIN_SONG_SKIP_MSG = "An admin has skipped the song."
 
 // Message shown to users when an admin skips a playlist.
-const ADMIN_PLAYLIST_SKIP_MSG = "An admin has decided to skip the current playlist."
+const ADMIN_PLAYLIST_SKIP_MSG = "An admin has skipped the playlist."
 
 // Message shown to users when the audio for a video could not be downloaded.
 const AUDIO_FAIL_MSG = "The audio download for this video failed. <b>%s</b> has likely not generated the audio files for this track yet. Skipping to the next song!"
@@ -120,12 +120,12 @@ const NEXT_PLAYLIST_ADDED_HTML = `
 
 // Message shown to channel when a song has been skipped.
 const SONG_SKIPPED_HTML = `
-	The number of votes required for a skip has been met. <b>Skipping song!</b>
+	Vote passed to skip the song.
 `
 
 // Message shown to channel when a playlist has been skipped.
 const PLAYLIST_SKIPPED_HTML = `
-	The number of votes required for a skip has been met. <b>Skipping playlist!</b>
+	Vote passed to skip the playlist.
 `
 
 // Message shown to display bot commands.
@@ -160,7 +160,7 @@ const HELP_HTML = `<br/>
 
 // Message shown to users when they ask for the current volume (volume command without argument)
 const CUR_VOLUME_HTML = `
-	The current volume is <b>%.2f</b>.
+	The volume is <b>%.2f</b>.
 `
 
 // Message shown to users when another user votes to skip the current song.
@@ -170,7 +170,7 @@ const SKIP_ADDED_HTML = `
 
 // Message shown to users when the submitter of a song decides to skip their song.
 const SUBMITTER_SKIP_HTML = `
-	The current song has been skipped by <b>%s</b>, the submitter.
+	The submitter skipped the song.
 `
 
 // Message shown to users when another user votes to skip the current playlist.
@@ -185,7 +185,7 @@ const PLAYLIST_SUBMITTER_SKIP_HTML = `
 
 // Message shown to users when they successfully change the volume.
 const VOLUME_SUCCESS_HTML = `
-	<b>%s</b> has changed the volume to <b>%.2f</b>.
+	<b>%s</b> changed the volume to <b>%.2f</b>.
 `
 
 // Message shown to users when a user successfully resets the SongQueue.
