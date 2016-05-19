@@ -9,10 +9,13 @@ package bot
 
 import (
 	"errors"
+	"fmt"
 	"os/exec"
 	"sync"
+	"time"
 
 	"github.com/antonholmquist/jason"
+	"github.com/layeh/gumble/gumble"
 )
 
 // YouTubeDL is a struct that gathers all methods related to the youtube-dl
@@ -33,13 +36,14 @@ func (yt *YouTubeDL) CheckInstallation() error {
 }
 
 // GetTracks returns track objects retrieved from the provided URL.
-func (yt *YouTubeDL) GetTracks(url string) ([]*Track, error) {
+func (yt *YouTubeDL) GetTracks(url string, user *gumble.User) ([]*Track, error) {
 	var (
 		jsonBytes  []byte
 		err        error
 		json       *jason.Object
 		extractor  string
 		isPlaylist bool
+		tracks     []*Track
 	)
 
 	command := exec.Command("youtube-dl", "--dump-json", "--flat-playlist", url)
@@ -71,13 +75,16 @@ func (yt *YouTubeDL) GetTracks(url string) ([]*Track, error) {
 	if isPlaylist {
 		// Multiple webpages must be fetched and parsed. To speed this up, separate
 		// goroutines are spawned to handle each track of the playlist.
+		var trackObjects []*jason.Object
 		var waitGroup sync.WaitGroup
+
 	} else {
 		// Only one webpage must be fetched and parsed, no goroutines are necessary.
-		track := yt.createTrack(json)
+		track := yt.createTrack(json, user, nil)
+		tracks = append(tracks, track)
 	}
 
-	return nil, nil
+	return tracks, nil
 }
 
 func (yt *YouTubeDL) isWhitelisted(extractor string) bool {
@@ -89,6 +96,26 @@ func (yt *YouTubeDL) isWhitelisted(extractor string) bool {
 	return false
 }
 
-func (yt *YouTubeDL) createTrack(json *jason.Object) *Track {
-	return nil
+func (yt *YouTubeDL) createTrack(json *jason.Object, user *gumble.User, playlist *Playlist) *Track {
+	// TODO: Perform better error handling here.
+	id, _ := json.GetString("id")
+	title, _ := json.GetString("title")
+	author, _ := json.GetString("uploader")
+	submitter := user.Name
+	service, _ := json.GetString("extractor")
+	thumbnailURL, _ := json.GetString("thumbnail")
+	durationSeconds, _ := json.GetInt64("duration")
+	duration, _ := time.ParseDuration(fmt.Sprintf("%ds", durationSeconds))
+
+	return &Track{
+		ID:           id,
+		Title:        title,
+		Author:       author,
+		Submitter:    submitter,
+		Service:      service,
+		Filename:     "",
+		ThumbnailURL: thumbnailURL,
+		Duration:     duration,
+		Playlist:     playlist,
+	}
 }
