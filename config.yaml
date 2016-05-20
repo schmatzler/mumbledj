@@ -3,6 +3,20 @@
 # config.yaml
 # Copyright (c) 2016 Matthieu Grieger (MIT License)
 
+
+api:
+  
+  # YouTube API key
+  youtube: ""
+  
+  # SoundCloud API key
+  # NOTE: The API key is your client ID.
+  soundcloud: ""
+  
+  # Mixcloud API key
+  mixcloud: ""
+  
+
 general:
 
   # Command prefix
@@ -16,7 +30,7 @@ general:
 
   # Default comment to be applied to bot.
   # NOTE: If you do not want a comment by default, set to empty string ("").
-  default_comment: Hello! I am a bot. Type !help for a list of commands.
+  default_comment: "Hello! I am a bot. Type !help for a list of commands."
 
   # Default channel for the bot to enter upon connection.
   # NOTE: If you wish for the bot to connect to the root channel, set to empty string ("").
@@ -51,7 +65,7 @@ connection:
   password: ""
 
   # Default username for MumbleDJ
-  username: MumbleDJ
+  username: "MumbleDJ"
 
   # Should the bot attempt an insecure connection?
   # An insecure connection does not verify the certificate of the server for
@@ -97,7 +111,7 @@ cache:
 
   # Directory to store cached items
   # NOTE: If you'd like to use the location set by the XDG standard, use $XDG_CACHE_HOME
-  directory: ~/.mumbledj/cache
+  directory: "$XDG_CACHE_HOME"
 
 
 volume:
@@ -116,122 +130,122 @@ aliases:
 
   # Aliases used for add command
   add:
-    - add
-    - a
+    - "add"
+    - "a"
 
   # Aliases used for addnext command
   add_next:
-    - addnext
-    - an
+    - "addnext"
+    - "an"
 
   # Aliases used for skip command
   skip:
-    - skip
-    - s
+    - "skip"
+    - "s"
 
   # Aliases used for playlist skip command
   skip_playlist:
-    - skipplaylist
-    - sp
+    - "skipplaylist"
+    - "sp"
 
   # Aliases used for force skip command
   force_skip:
-    - forceskip
-    - fs
+    - "forceskip"
+    - "fs"
 
   # Aliases used for force playlist skip command
   force_skip_playlist:
-    - forceskipplaylist
-    - fsp
+    - "forceskipplaylist"
+    - "fsp"
 
   # Aliases used for help command
   help:
-    - help
-    - h
+    - "help"
+    - "h"
 
   # Aliases used for volume command
   volume:
-    - volume
-    - vol
+    - "volume"
+    - "vol"
 
   # Aliases used for move command
   move:
-    - move
-    - m
+    - "move"
+    - "m"
 
   # Aliases used for reload command
   reload:
-    - reload
-    - r
+    - "reload"
+    - "r"
 
   # Aliases used for queue reset command
   reset:
-    - reset
-    - re
+    - "reset"
+    - "re"
 
   # Aliases used for numtracks command
   num_tracks:
-    - numtracks
-    - numsongs
-    - nt
+    - "numtracks"
+    - "numsongs"
+    - "nt"
 
   # Aliases used for nexttrack command
   next_track:
-    - nexttrack
-    - nextsong
-    - next
+    - "nexttrack"
+    - "nextsong"
+    - "next"
 
   # Aliases used for the currenttrack command
   current_track:
-    - currenttrack
-    - currentsong
-    - current
+    - "currenttrack"
+    - "currentsong"
+    - "current"
 
   # Aliases used for the setcomment command
   set_comment:
-    - setcomment
-    - comment
-    - sc
+    - "setcomment"
+    - "comment"
+    - "sc"
 
   # Aliases used for numcached command
   num_cached:
-    - numcached
-    - nc
+    - "numcached"
+    - "nc"
 
   # Aliases used for cachesize command
   cache_size:
-    - cachesize
-    - cs
+    - "cachesize"
+    - "cs"
 
   # Aliases used for kill command
   kill:
-    - kill
-    - k
+    - "kill"
+    - "k"
 
   # Aliases used for shuffle command
   shuffle:
-    - shuffle
-    - shuf
-    - sh
+    - "shuffle"
+    - "shuf"
+    - "sh"
 
   # Aliases used for toggleshuffle command
   toggle_shuffle:
-    - toggleshuffle
-    - toggleshuf
-    - togshuf
-    - tsh
+    - "toggleshuffle"
+    - "toggleshuf"
+    - "togshuf"
+    - "tsh"
 
   # Aliases used for listsongs command
   list_tracks:
-    - listtracks
-    - listsongs
-    - list
-    - l
+    - "listtracks"
+    - "listsongs"
+    - "list"
+    - "l"
 
   # Aliases used for version command
   version:
-    - version
-    - v
+    - "version"
+    - "v"
 
 
 permissions:
@@ -240,7 +254,7 @@ permissions:
   enabled: true
 
   # Mumble user group in which admins are stored
-  user_group: mumbledj_admins
+  user_group: "mumbledj_admins"
 
   # Make add an admin command?
   add: false
@@ -312,78 +326,67 @@ permissions:
 descriptions:
 
   # Description for add command
-  add: Adds a track or playlist from a media site to the audio queue.
+  add: "Adds a track or playlist from a media site to the audio queue."
 
   # Description for addnext command
-  add_next: Adds a track or playlist from a media site as the next item in the audio queue.
+  add_next: "Adds a track or playlist from a media site as the next item in the audio queue."
 
   # Description for skip command
-  skip: Places a vote to skip the current track.
+  skip: "Places a vote to skip the current track."
 
   # Description for skipplaylist command
-  skip_playlist: Places a vote to skip the current playlist.
+  skip_playlist: "Places a vote to skip the current playlist."
 
   # Description for forceskip command
-  force_skip: Immediately skips the current track.
+  force_skip: "Immediately skips the current track."
 
   # Description for forceskipplaylist command
-  force_skip_playlist: Immediately skips the current playlist.
+  force_skip_playlist: "Immediately skips the current playlist."
 
   # Description for help command
-  help: Outputs this list of commands.
+  help: "Outputs this list of commands."
 
   # Description for volume command
-  volume: Changes the volume if an argument is provided, outputs the current volume otherwise.
+  volume: "Changes the volume if an argument is provided, outputs the current volume otherwise."
 
   # Description for move command
-  move: Moves the bot into the Mumble channel provided via argument.
+  move: "Moves the bot into the Mumble channel provided via argument."
 
   # Description for reload command
-  reload: Reloads the configuration file.
+  reload: "Reloads the configuration file."
 
   # Description for reset command
-  reset: Resets the audio queue by removing all queue items.
+  reset: "Resets the audio queue by removing all queue items."
 
   # Description for numtracks command
-  num_tracks: Outputs the number of tracks currently in the audio queue.
+  num_tracks: "Outputs the number of tracks currently in the audio queue."
 
   # Description for nexttrack command
-  next_track: Outputs information about the next track in the queue if one exists.
+  next_track: "Outputs information about the next track in the queue if one exists."
 
   # Description for currenttrack command
-  current_track: Outputs information about the current track in the queue if one exists.
+  current_track: "Outputs information about the current track in the queue if one exists."
 
   # Description for setcomment command
-  set_comment: Sets the comment displayed next to MumbleDJ's username in Mumble.
+  set_comment: "Sets the comment displayed next to MumbleDJ's username in Mumble."
 
   # Description for numcached command
-  num_cached: Outputs the number of tracks cached on disk if caching is enabled.
+  num_cached: "Outputs the number of tracks cached on disk if caching is enabled."
 
   # Description for cachesize command
-  cache_size: Outputs the file size of the cache in MiB if caching is enabled.
+  cache_size: "Outputs the file size of the cache in MiB if caching is enabled."
 
   # Description for kill command
-  kill: Stops the bot and cleans its cache directory.
+  kill: "Stops the bot and cleans its cache directory."
 
   # Description for shuffle command
-  shuffle: Randomizes the tracks currently in the audio queue.
+  shuffle: "Randomizes the tracks currently in the audio queue."
 
   # Description for toggleshuffle command
-  toggle_shuffle: Toggles permanent track shuffling on/off.
+  toggle_shuffle: "Toggles permanent track shuffling on/off."
 
   # Description for listtracks command
-  list_tracks: Outputs a list of the tracks currently in the queue.
+  list_tracks: "Outputs a list of the tracks currently in the queue."
 
   # Description for version command
-  version: Outputs the current version of MumbleDJ.
-  
-
-services:
-
-  # Service whitelist. All services that are listed here will be enabled in the bot.
-  # Available services can be found at the following URL:
-  # https://github.com/rg3/youtube-dl/blob/master/docs/supportedsites.md
-  whitelist:
-    - youtube
-    - soundcloud
-    - mixcloud
+  version: "Outputs the current version of MumbleDJ."
