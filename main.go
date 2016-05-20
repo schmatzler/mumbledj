@@ -15,6 +15,7 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/matthieugrieger/mumbledj/bot"
 	"github.com/matthieugrieger/mumbledj/commands"
+	"github.com/matthieugrieger/mumbledj/services"
 )
 
 // DJ is a global variable that holds various details about the bot's state.
@@ -40,6 +41,9 @@ func init() {
 	bot.Warn = Warn
 	bot.Error = Error
 	bot.Info = Info
+	services.Warn = Warn
+	services.Error = Error
+	services.Info = Info
 
 	DJ.Version = "3.0.0-alpha"
 }
