@@ -7,14 +7,15 @@
 
 package bot
 
-import "github.com/tucnak/store"
-import "github.com/cep21/xdgbasedir"
+import (
+	"github.com/cep21/xdgbasedir"
+	"github.com/tucnak/store"
+)
 
 // APIConfig holds API keys.
 type APIConfig struct {
 	YouTube    string
 	SoundCloud string
-	Mixcloud   string
 }
 
 // GeneralConfig holds general configuration values.
@@ -284,7 +285,6 @@ func NewConfig() *Config {
 	apiConfig := APIConfig{
 		YouTube:    "",
 		SoundCloud: "",
-		Mixcloud:   "",
 	}
 
 	// Override these default config values with the values from the config file if it exists.
