@@ -7,7 +7,11 @@
 
 package services
 
-import "github.com/matthieugrieger/mumbledj/bot"
+import (
+	"regexp"
+
+	"github.com/matthieugrieger/mumbledj/bot"
+)
 
 // Mixcloud is a wrapper around the Mixcloud API.
 // https://www.mixcloud.com/developers/
@@ -34,6 +38,8 @@ func NewMixcloudService() *Mixcloud {
 // provided in the configuration file to determine if the
 // service should be enabled.
 func (mc *Mixcloud) CheckAPIKey() error {
+	// Mixcloud (at the moment) does not require an API key,
+	// so we can just return nil.
 	return nil
 }
 
@@ -41,6 +47,9 @@ func (mc *Mixcloud) CheckAPIKey() error {
 // for valid URLs associated with this service. Returns true if a
 // match is found, false otherwise.
 func (mc *Mixcloud) CheckURL(url string) bool {
+	if mc.isTrack(url) || mc.isPlaylist(url) {
+		return true
+	}
 	return false
 }
 
@@ -49,4 +58,24 @@ func (mc *Mixcloud) CheckURL(url string) bool {
 // if any error occurs during the API call.
 func (mc *Mixcloud) GetTracks(url string) ([]bot.Track, error) {
 	return nil, nil
+}
+
+func (mc *Mixcloud) isTrack(url string) bool {
+	for _, regex := range mc.TrackRegex {
+		re, _ := regexp.Compile(regex)
+		if re.MatchString(url) {
+			return true
+		}
+	}
+	return false
+}
+
+func (mc *Mixcloud) isPlaylist(url string) bool {
+	for _, regex := range mc.PlaylistRegex {
+		re, _ := regexp.Compile(regex)
+		if re.MatchString(url) {
+			return true
+		}
+	}
+	return false
 }

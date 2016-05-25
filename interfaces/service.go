@@ -12,5 +12,5 @@ package interfaces
 type Service interface {
 	CheckAPIKey() error
 	CheckURL(string) bool
-	GetTracks(string) []Track
+	GetTracks(string) ([]Track, error)
 }

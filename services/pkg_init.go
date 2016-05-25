@@ -7,7 +7,14 @@
 
 package services
 
-import "log"
+import (
+	"log"
+
+	"github.com/matthieugrieger/mumbledj/bot"
+)
+
+// DJ is an injected MumbleDJ struct.
+var DJ *bot.MumbleDJ
 
 // Warn is an injected logger that logs warn messages.
 var Warn *log.Logger

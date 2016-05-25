@@ -7,7 +7,14 @@
 
 package services
 
-import "github.com/matthieugrieger/mumbledj/bot"
+import (
+	"errors"
+	"fmt"
+	"net/http"
+	"regexp"
+
+	"github.com/matthieugrieger/mumbledj/bot"
+)
 
 // YouTube is a wrapper around the YouTube Data API.
 // https://developers.google.com/youtube/v3/docs/
@@ -38,13 +45,21 @@ func NewYouTubeService() *YouTube {
 // provided in the configuration file to determine if the
 // service should be enabled.
 func (yt *YouTube) CheckAPIKey() error {
-	return nil
+	if DJ.BotConfig.API.YouTube == "" {
+		return errors.New("No YouTube API key has been provided")
+	}
+	url := "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=KQY9zrjPBjo&key=%s"
+	_, err := http.Get(fmt.Sprintf(url, DJ.BotConfig.API.YouTube))
+	return err
 }
 
 // CheckURL matches the passed URL with a list of regex patterns
 // for valid URLs associated with this service. Returns true if a
 // match is found, false otherwise.
 func (yt *YouTube) CheckURL(url string) bool {
+	if yt.isTrack(url) || yt.isPlaylist(url) {
+		return true
+	}
 	return false
 }
 
@@ -53,4 +68,24 @@ func (yt *YouTube) CheckURL(url string) bool {
 // if any error occurs during the API call.
 func (yt *YouTube) GetTracks(url string) ([]bot.Track, error) {
 	return nil, nil
+}
+
+func (yt *YouTube) isTrack(url string) bool {
+	for _, regex := range yt.TrackRegex {
+		re, _ := regexp.Compile(regex)
+		if re.MatchString(url) {
+			return true
+		}
+	}
+	return false
+}
+
+func (yt *YouTube) isPlaylist(url string) bool {
+	for _, regex := range yt.PlaylistRegex {
+		re, _ := regexp.Compile(regex)
+		if re.MatchString(url) {
+			return true
+		}
+	}
+	return false
 }
