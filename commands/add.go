@@ -45,17 +45,25 @@ func (c *AddCommand) IsAdminCommand() bool {
 // Example return statement:
 //    return "This is a private message!", true, nil
 func (c *AddCommand) Execute(user *gumble.User, args ...string) (string, bool, error) {
-	var allTracks []interfaces.Track
-	tracksTooLong := ""
+	var (
+		allTracks     []interfaces.Track
+		tracks        []interfaces.Track
+		service       interfaces.Service
+		err           error
+		tracksTooLong string
+		addString     string
+	)
 
 	if len(args) == 0 {
 		return "", true, errors.New("A URL must be supplied with the add command")
 	}
 
 	for _, arg := range args {
-		tracks, err := DJ.YouTubeDL.GetTracks(arg)
-		if err == nil {
-			allTracks = append(allTracks, tracks...)
+		if service, err = DJ.GetService(arg); err == nil {
+			tracks, err = service.GetTracks(arg)
+			if err == nil {
+				allTracks = append(allTracks, tracks...)
+			}
 		}
 	}
 
@@ -63,11 +71,11 @@ func (c *AddCommand) Execute(user *gumble.User, args ...string) (string, bool, e
 		return "", true, errors.New("No valid tracks were found with the provided URL(s)")
 	}
 
-	addString := fmt.Sprintf("<b>%s</b> added <b>%d</b> tracks to the queue:</br>",
+	addString = fmt.Sprintf("<b>%s</b> added <b>%d</b> tracks to the queue:</br>",
 		user.Name, len(allTracks))
 
 	for _, track := range allTracks {
-		if err := DJ.Queue.AddTrack(track); err != nil {
+		if err = DJ.Queue.AddTrack(track); err != nil {
 			tracksTooLong += fmt.Sprintf("\"%s\" from %s </br>",
 				track.GetTitle(), track.GetService())
 		} else {
