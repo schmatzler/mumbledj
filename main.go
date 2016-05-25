@@ -41,6 +41,7 @@ func init() {
 	bot.Warn = Warn
 	bot.Error = Error
 	bot.Info = Info
+	services.DJ = DJ
 	services.Warn = Warn
 	services.Error = Error
 	services.Info = Info
