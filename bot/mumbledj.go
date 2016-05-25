@@ -23,18 +23,19 @@ import (
 
 // MumbleDJ is a struct that keeps track of all aspects of the bot's state.
 type MumbleDJ struct {
-	Client       *gumble.Client
-	GumbleConfig *gumble.Config
-	AudioStream  *gumbleffmpeg.Stream
-	BotConfig    *Config
-	Queue        *Queue
-	Cache        *Cache
-	Skips        *SkipTracker
-	Commands     []interfaces.Command
-	KeepAlive    chan bool
-	Version      string
-	Volume       float32
-	YouTubeDL    *YouTubeDL
+	AvailableServices []interfaces.Service
+	Client            *gumble.Client
+	GumbleConfig      *gumble.Config
+	AudioStream       *gumbleffmpeg.Stream
+	BotConfig         *Config
+	Queue             *Queue
+	Cache             *Cache
+	Skips             *SkipTracker
+	Commands          []interfaces.Command
+	KeepAlive         chan bool
+	Version           string
+	Volume            float32
+	YouTubeDL         *YouTubeDL
 }
 
 // DJ is a struct that keeps track of all aspects of MumbleDJ's environment.
@@ -46,7 +47,6 @@ func NewMumbleDJ() *MumbleDJ {
 
 	dj.Commands = make([]interfaces.Command, 0)
 
-	// TODO: Load from config file if necessary.
 	dj.BotConfig = NewConfig()
 	dj.Queue = NewQueue()
 	dj.Cache = NewCache()
@@ -231,6 +231,18 @@ func (dj *MumbleDJ) FindAndExecuteCommand(user *gumble.User, message string) (st
 		return "", true, errors.New("No command was found in this message")
 	}
 	return dj.executeCommand(user, message, command)
+}
+
+// GetService loops through the available services and determines if a URL
+// matches a particular service. If a match is found, the service object is
+// returned.
+func (dj *MumbleDJ) GetService(url string) (interfaces.Service, error) {
+	for _, service := range dj.AvailableServices {
+		if service.CheckURL(url) {
+			return service, nil
+		}
+	}
+	return nil, errors.New("The provided URL does not match an enabled service")
 }
 
 func (dj *MumbleDJ) findCommand(message string) (interfaces.Command, error) {
