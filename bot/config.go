@@ -7,159 +7,160 @@
 
 package bot
 
-import (
-	"io/ioutil"
+import "github.com/tucnak/store"
+import "github.com/cep21/xdgbasedir"
 
-	"gopkg.in/yaml.v2"
-)
+// APIConfig holds API keys.
+type APIConfig struct {
+	YouTube    string
+	SoundCloud string
+	Mixcloud   string
+}
 
 // GeneralConfig holds general configuration values.
 type GeneralConfig struct {
-	CommandPrefix        string  `yaml:"command_prefix"`
-	SkipRatio            float32 `yaml:"skip_ratio"`
-	PlaylistSkipRatio    float32 `yaml:"playlist_skip_ratio"`
-	DefaultComment       string  `yaml:"default_comment"`
-	DefaultChannel       string  `yaml:"default_channel"`
-	MaxTrackDuration     int     `yaml:"max_track_duration"`
-	MaxTracksPerPlaylist int     `yaml:"max_tracks_per_playlist"`
-	AutomaticShuffleOn   bool    `yaml:"automatic_shuffle_on"`
-	AnnounceNewTrack     bool    `yaml:"announce_new_track"`
-	PlayerCommand        string  `yaml:"player_command"`
+	CommandPrefix        string
+	SkipRatio            float32
+	PlaylistSkipRatio    float32
+	DefaultComment       string
+	DefaultChannel       string
+	MaxTrackDuration     int
+	MaxTracksPerPlaylist int
+	AutomaticShuffleOn   bool
+	AnnounceNewTrack     bool
+	PlayerCommand        string
 }
 
 // ConnectionConfig holds connection configuration values.
 type ConnectionConfig struct {
-	Address       string `yaml:"address"`
-	Port          string `yaml:"port"`
-	Password      string `yaml:"password"`
-	Username      string `yaml:"username"`
-	Insecure      bool   `yaml:"insecure"`
-	Cert          string `yaml:"cert"`
-	Key           string `yaml:"key"`
-	AccessTokens  string `yaml:"access_tokens"`
-	RetryEnabled  bool   `yaml:"retry_enabled"`
-	RetryAttempts int    `yaml:"retry_attempts"`
-	RetryInterval int    `yaml:"retry_interval"`
+	Address       string
+	Port          string
+	Password      string
+	Username      string
+	Insecure      bool
+	Cert          string
+	Key           string
+	AccessTokens  string
+	RetryEnabled  bool
+	RetryAttempts int
+	RetryInterval int
 }
 
 // VolumeConfig holds volume configuration values.
 type VolumeConfig struct {
-	Default float32 `yaml:"default"`
-	Lowest  float32 `yaml:"lowest"`
-	Highest float32 `yaml:"highest"`
+	Default float32
+	Lowest  float32
+	Highest float32
 }
 
 // CacheConfig holds cache configuration values.
 type CacheConfig struct {
-	Enabled       bool   `yaml:"enabled"`
-	MaximumSize   int    `yaml:"maximum_size"`
-	ExpireTime    int    `yaml:"expire_time"`
-	CheckInterval int    `yaml:"check_interval"`
-	Directory     string `yaml:"directory"`
+	Enabled       bool
+	MaximumSize   int
+	ExpireTime    int
+	CheckInterval int
+	Directory     string
 }
 
 // AliasesConfig holds command alias configuration values.
 type AliasesConfig struct {
-	Add               []string `yaml:"add"`
-	AddNext           []string `yaml:"add_next"`
-	Skip              []string `yaml:"skip"`
-	SkipPlaylist      []string `yaml:"skip_playlist"`
-	ForceSkip         []string `yaml:"force_skip"`
-	ForceSkipPlaylist []string `yaml:"force_skip_playlist"`
-	Help              []string `yaml:"help"`
-	Volume            []string `yaml:"volume"`
-	Move              []string `yaml:"move"`
-	Reload            []string `yaml:"reload"`
-	Reset             []string `yaml:"reset"`
-	NumTracks         []string `yaml:"num_tracks"`
-	NextTrack         []string `yaml:"next_track"`
-	CurrentTrack      []string `yaml:"current_track"`
-	SetComment        []string `yaml:"set_comment"`
-	NumCached         []string `yaml:"num_cached"`
-	CacheSize         []string `yaml:"cache_size"`
-	Kill              []string `yaml:"kill"`
-	Shuffle           []string `yaml:"shuffle"`
-	ToggleShuffle     []string `yaml:"toggle_shuffle"`
-	ListTracks        []string `yaml:"list_tracks"`
-	Version           []string `yaml:"version"`
+	Add               []string
+	AddNext           []string
+	Skip              []string
+	SkipPlaylist      []string
+	ForceSkip         []string
+	ForceSkipPlaylist []string
+	Help              []string
+	Volume            []string
+	Move              []string
+	Reload            []string
+	Reset             []string
+	NumTracks         []string
+	NextTrack         []string
+	CurrentTrack      []string
+	SetComment        []string
+	NumCached         []string
+	CacheSize         []string
+	Kill              []string
+	Shuffle           []string
+	ToggleShuffle     []string
+	ListTracks        []string
+	Version           []string
 }
 
 // PermissionsConfig holds command permission configuration values.
 type PermissionsConfig struct {
-	Enabled           bool   `yaml:"enabled"`
-	UserGroup         string `yaml:"user_group"`
-	Add               bool   `yaml:"add"`
-	AddNext           bool   `yaml:"add_next"`
-	AddPlaylist       bool   `yaml:"add_playlist"`
-	Skip              bool   `yaml:"skip"`
-	SkipPlaylist      bool   `yaml:"skip_playlist"`
-	ForceSkip         bool   `yaml:"force_skip"`
-	ForceSkipPlaylist bool   `yaml:"force_skip_playlist"`
-	Help              bool   `yaml:"help"`
-	Volume            bool   `yaml:"volume"`
-	Move              bool   `yaml:"move"`
-	Reload            bool   `yaml:"reload"`
-	Reset             bool   `yaml:"reset"`
-	NumTracks         bool   `yaml:"num_tracks"`
-	NextTrack         bool   `yaml:"next_track"`
-	CurrentTrack      bool   `yaml:"current_track"`
-	SetComment        bool   `yaml:"set_comment"`
-	NumCached         bool   `yaml:"num_cached"`
-	CacheSize         bool   `yaml:"cache_size"`
-	Kill              bool   `yaml:"kill"`
-	Shuffle           bool   `yaml:"shuffle"`
-	ToggleShuffle     bool   `yaml:"toggle_shuffle"`
-	ListTracks        bool   `yaml:"list_tracks"`
-	Version           bool   `yaml:"version"`
+	Enabled           bool
+	UserGroup         string
+	Add               bool
+	AddNext           bool
+	AddPlaylist       bool
+	Skip              bool
+	SkipPlaylist      bool
+	ForceSkip         bool
+	ForceSkipPlaylist bool
+	Help              bool
+	Volume            bool
+	Move              bool
+	Reload            bool
+	Reset             bool
+	NumTracks         bool
+	NextTrack         bool
+	CurrentTrack      bool
+	SetComment        bool
+	NumCached         bool
+	CacheSize         bool
+	Kill              bool
+	Shuffle           bool
+	ToggleShuffle     bool
+	ListTracks        bool
+	Version           bool
 }
 
 // DescriptionsConfig holds command description configuration values.
 type DescriptionsConfig struct {
-	Add               string `yaml:"add"`
-	AddNext           string `yaml:"add_next"`
-	Skip              string `yaml:"skip"`
-	SkipPlaylist      string `yaml:"skip_playlist"`
-	ForceSkip         string `yaml:"force_skip"`
-	ForceSkipPlaylist string `yaml:"force_skip_playlist"`
-	Help              string `yaml:"help"`
-	Volume            string `yaml:"volume"`
-	Move              string `yaml:"move"`
-	Reload            string `yaml:"reload"`
-	Reset             string `yaml:"reset"`
-	NumTracks         string `yaml:"num_tracks"`
-	NextTrack         string `yaml:"next_track"`
-	CurrentTrack      string `yaml:"current_track"`
-	SetComment        string `yaml:"set_comment"`
-	NumCached         string `yaml:"num_cached"`
-	CacheSize         string `yaml:"cache_size"`
-	Kill              string `yaml:"kill"`
-	Shuffle           string `yaml:"shuffle"`
-	ToggleShuffle     string `yaml:"toggle_shuffle"`
-	ListTracks        string `yaml:"list_tracks"`
-	Version           string `yaml:"version"`
-}
-
-// ServicesConfig holds service configuration values.
-type ServicesConfig struct {
-	Whitelist []string `yaml:"whitelist"`
+	Add               string
+	AddNext           string
+	Skip              string
+	SkipPlaylist      string
+	ForceSkip         string
+	ForceSkipPlaylist string
+	Help              string
+	Volume            string
+	Move              string
+	Reload            string
+	Reset             string
+	NumTracks         string
+	NextTrack         string
+	CurrentTrack      string
+	SetComment        string
+	NumCached         string
+	CacheSize         string
+	Kill              string
+	Shuffle           string
+	ToggleShuffle     string
+	ListTracks        string
+	Version           string
 }
 
 // Config gathers all logic related to configuration via commandline arguments
 // and configuration files.
 type Config struct {
-	ConfigFileLocation string
-	General            GeneralConfig      `yaml:"general"`
-	Connection         ConnectionConfig   `yaml:"connection"`
-	Volume             VolumeConfig       `yaml:"volume"`
-	Cache              CacheConfig        `yaml:"cache"`
-	Aliases            AliasesConfig      `yaml:"aliases"`
-	Permissions        PermissionsConfig  `yaml:"permissions"`
-	Descriptions       DescriptionsConfig `yaml:"descriptions"`
-	Services           ServicesConfig     `yaml:"services"`
+	API          APIConfig
+	General      GeneralConfig
+	Connection   ConnectionConfig
+	Volume       VolumeConfig
+	Cache        CacheConfig
+	Aliases      AliasesConfig
+	Permissions  PermissionsConfig
+	Descriptions DescriptionsConfig
 }
 
 // NewConfig returns a new config populated with default values.
 func NewConfig() *Config {
+	var config Config
+	store.SetApplicationName("mumbledj")
+
 	generalConfig := GeneralConfig{
 		CommandPrefix:        "!",
 		SkipRatio:            0.5,
@@ -172,6 +173,7 @@ func NewConfig() *Config {
 		AnnounceNewTrack:     true,
 		PlayerCommand:        "ffmpeg",
 	}
+
 	connectionConfig := ConnectionConfig{
 		Address:       "127.0.0.1",
 		Port:          "64738",
@@ -185,18 +187,22 @@ func NewConfig() *Config {
 		RetryAttempts: 10,
 		RetryInterval: 5,
 	}
+
 	volumeConfig := VolumeConfig{
 		Default: 0.4,
 		Lowest:  0.01,
 		Highest: 0.8,
 	}
+
+	cacheDir, _ := xdgbasedir.CacheDirectory()
 	cacheConfig := CacheConfig{
 		Enabled:       false,
 		MaximumSize:   512,
 		ExpireTime:    24,
 		CheckInterval: 5,
-		Directory:     "~/.mumbledj/cache", // TODO: Set to $XDG_CACHE_HOME
+		Directory:     cacheDir,
 	}
+
 	aliasesConfig := AliasesConfig{
 		Add:               []string{"add", "a"},
 		AddNext:           []string{"addnext", "an"},
@@ -221,6 +227,7 @@ func NewConfig() *Config {
 		ListTracks:        []string{"listtracks", "listsongs", "list", "l"},
 		Version:           []string{"version", "v"},
 	}
+
 	permissionsConfig := PermissionsConfig{
 		Enabled:           true,
 		UserGroup:         "mumbledj_admins",
@@ -248,6 +255,7 @@ func NewConfig() *Config {
 		ListTracks:        false,
 		Version:           false,
 	}
+
 	descriptionsConfig := DescriptionsConfig{
 		Add:               "Adds a track or playlist from a media site to the audio queue.",
 		AddNext:           "Adds a track or playlist from a media site as the next item in the audio queue.",
@@ -272,39 +280,38 @@ func NewConfig() *Config {
 		ListTracks:        "Outputs a list of the tracks currently in the queue.",
 		Version:           "Outputs the current version of MumbleDJ.",
 	}
-	servicesConfig := ServicesConfig{
-		Whitelist: []string{"youtube", "soundcloud", "mixcloud"},
+
+	apiConfig := APIConfig{
+		YouTube:    "",
+		SoundCloud: "",
+		Mixcloud:   "",
 	}
 
-	return &Config{
-		ConfigFileLocation: "~/.mumbledj/config.yaml", // TODO: Set to $XDG_CONFIG_HOME
-		General:            generalConfig,
-		Connection:         connectionConfig,
-		Volume:             volumeConfig,
-		Cache:              cacheConfig,
-		Aliases:            aliasesConfig,
-		Permissions:        permissionsConfig,
-		Descriptions:       descriptionsConfig,
-		Services:           servicesConfig,
+	// Override these default config values with the values from the config file if it exists.
+	if err := store.Load("config.toml", &config); err != nil {
+		config = Config{
+			API:          apiConfig,
+			General:      generalConfig,
+			Connection:   connectionConfig,
+			Volume:       volumeConfig,
+			Cache:        cacheConfig,
+			Aliases:      aliasesConfig,
+			Permissions:  permissionsConfig,
+			Descriptions: descriptionsConfig,
+		}
+
+		// Configuration file does not currently exist; create one.
+		store.Save("config.toml", &config)
 	}
+	return &config
 }
 
-// LoadFromConfigFile loads configuration values from the filepath specified via
-// the filepath argument.
-func (c *Config) LoadFromConfigFile(filepath string) error {
-	var (
-		data []byte
-		err  error
-	)
+// Reload reloads configuration values from the config file.
+func (c *Config) Reload() error {
+	var config Config
 
-	if data, err = ioutil.ReadFile(filepath); err != nil {
+	if err := store.Load("config.toml", &config); err != nil {
 		return err
 	}
-
-	err = yaml.Unmarshal(data, &c)
-	if err != nil {
-		return err
-	}
-
 	return nil
 }

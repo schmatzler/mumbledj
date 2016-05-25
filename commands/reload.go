@@ -39,16 +39,10 @@ func (c *ReloadCommand) IsAdminCommand() bool {
 // Example return statement:
 //    return "This is a private message!", true, nil
 func (c *ReloadCommand) Execute(user *gumble.User, args ...string) (string, bool, error) {
-	// configFileLocation equal to "" just uses the default config file location.
-	configFileLocation := ""
-	if len(args) >= 1 {
-		configFileLocation = args[0]
-	}
-
-	if err := DJ.BotConfig.LoadFromConfigFile(configFileLocation); err != nil {
+	if err := DJ.BotConfig.Reload(); err != nil {
 		return "", true, err
 	}
 
-	return "The configuration in the configuration file has been loaded successfully.",
+	return "The configuration in the configuration file has been reloaded successfully.",
 		true, nil
 }
