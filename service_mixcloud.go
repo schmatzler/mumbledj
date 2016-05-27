@@ -20,6 +20,9 @@ import (
 // Regular expressions for mixcloud urls
 var mixcloudSongPattern = `https?:\/\/(www\.)?mixcloud\.com\/([\w-]+)\/([\w-]+)(#t=\n\n?(:\n\n)*)?`
 
+// SearchService name
+var mixcloudSearchServiceName = "mc"
+
 // Mixcloud implements the Service interface
 type Mixcloud struct{}
 
@@ -40,6 +43,10 @@ func (mc Mixcloud) TrackName() string {
 // URLRegex checks to see if service will accept URL
 func (mc Mixcloud) URLRegex(url string) bool {
 	return RegexpFromURL(url, []string{mixcloudSongPattern}) != nil
+}
+
+func (mc Mixcloud) SearchRegex(searchService string) bool {
+	return searchService == mixcloudSearchServiceName
 }
 
 // NewRequest creates the requested song and adds to the queue
@@ -77,6 +84,18 @@ func (mc Mixcloud) NewRequest(user *gumble.User, url string) ([]Song, error) {
 		}
 		return nil, err
 	}
+}
+
+// SearchSong searches for a Song and adds the first hit
+func (mc Mixcloud) SearchSong(searchString string) (string, error) {
+	var returnString string
+	url := fmt.Sprintf("null", searchString, dj.conf.ServiceKeys.SoundCloud)
+
+	if apiResponse, err := PerformGetRequest(url); err == nil {
+		returnString, _ = apiResponse.String("json", "0", "permalink_url");
+		return returnString, nil
+	}
+	return "", errors.New(fmt.Sprintf(INVALID_API_KEY, mc.ServiceName()))
 }
 
 // NewSong creates a track and adds to the queue
