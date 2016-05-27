@@ -7,29 +7,25 @@
 
 package services
 
-import (
-	"regexp"
-
-	"github.com/matthieugrieger/mumbledj/bot"
-)
+import "github.com/matthieugrieger/mumbledj/bot"
 
 // Mixcloud is a wrapper around the Mixcloud API.
 // https://www.mixcloud.com/developers/
 type Mixcloud struct {
-	ReadableName  string
-	TrackRegex    []string
-	PlaylistRegex []string
+	*GenericService
 }
 
 // NewMixcloudService returns an initialized Mixcloud service object.
 func NewMixcloudService() *Mixcloud {
 	return &Mixcloud{
-		ReadableName: "Mixcloud",
-		TrackRegex: []string{
-			`https?:\/\/(www\.)?mixcloud\.com\/([\w-]+)\/([\w-]+)(#t=\n\n?(:\n\n)*)?`,
-		},
-		PlaylistRegex: []string{
-			"",
+		&GenericService{
+			ReadableName: "Mixcloud",
+			TrackRegex: []string{
+				`https?:\/\/(www\.)?mixcloud\.com\/([\w-]+)\/([\w-]+)(#t=\n\n?(:\n\n)*)?`,
+			},
+			PlaylistRegex: []string{
+				"",
+			},
 		},
 	}
 }
@@ -58,24 +54,4 @@ func (mc *Mixcloud) CheckURL(url string) bool {
 // if any error occurs during the API call.
 func (mc *Mixcloud) GetTracks(url string) ([]bot.Track, error) {
 	return nil, nil
-}
-
-func (mc *Mixcloud) isTrack(url string) bool {
-	for _, regex := range mc.TrackRegex {
-		re, _ := regexp.Compile(regex)
-		if re.MatchString(url) {
-			return true
-		}
-	}
-	return false
-}
-
-func (mc *Mixcloud) isPlaylist(url string) bool {
-	for _, regex := range mc.PlaylistRegex {
-		re, _ := regexp.Compile(regex)
-		if re.MatchString(url) {
-			return true
-		}
-	}
-	return false
 }

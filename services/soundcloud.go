@@ -11,7 +11,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"regexp"
 
 	"github.com/matthieugrieger/mumbledj/bot"
 )
@@ -19,20 +18,20 @@ import (
 // SoundCloud is a wrapper around the SoundCloud API.
 // https://developers.soundcloud.com/docs/api/reference
 type SoundCloud struct {
-	ReadableName  string
-	TrackRegex    []string
-	PlaylistRegex []string
+	*GenericService
 }
 
 // NewSoundCloudService returns an initialized SoundCloud service object.
 func NewSoundCloudService() *SoundCloud {
 	return &SoundCloud{
-		ReadableName: "SoundCloud",
-		TrackRegex: []string{
-			`https?:\/\/(www\.)?soundcloud\.com\/([\w-]+)\/([\w-]+)(#t=\n\n?(:\n\n)*)?`,
-		},
-		PlaylistRegex: []string{
-			`https?:\/\/(www\.)?soundcloud\.com\/([\w-]+)\/sets\/([\w-]+)`,
+		&GenericService{
+			ReadableName: "SoundCloud",
+			TrackRegex: []string{
+				`https?:\/\/(www\.)?soundcloud\.com\/([\w-]+)\/([\w-]+)(#t=\n\n?(:\n\n)*)?`,
+			},
+			PlaylistRegex: []string{
+				`https?:\/\/(www\.)?soundcloud\.com\/([\w-]+)\/sets\/([\w-]+)`,
+			},
 		},
 	}
 }
@@ -64,24 +63,4 @@ func (sc *SoundCloud) CheckURL(url string) bool {
 // if any error occurs during the API call.
 func (sc *SoundCloud) GetTracks(url string) ([]bot.Track, error) {
 	return nil, nil
-}
-
-func (sc *SoundCloud) isTrack(url string) bool {
-	for _, regex := range sc.TrackRegex {
-		re, _ := regexp.Compile(regex)
-		if re.MatchString(url) {
-			return true
-		}
-	}
-	return false
-}
-
-func (sc *SoundCloud) isPlaylist(url string) bool {
-	for _, regex := range sc.PlaylistRegex {
-		re, _ := regexp.Compile(regex)
-		if re.MatchString(url) {
-			return true
-		}
-	}
-	return false
 }
