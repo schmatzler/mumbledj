@@ -11,11 +11,11 @@ CommandPrefix = "!"
 
 # Ratio that must be met or exceeded to trigger a song skip
 # DEFAULT VALUE: 0.5
-SkipRatio = 0.5
+SkipRatio = 0.33
 
 # Ratio that must be met or exceeded to trigger a playlist skip
 # DEFAULT VALUE: 0.5
-PlaylistSkipRatio = 0.5
+PlaylistSkipRatio = 0.33
 
 # Default comment to be applied to bot.
 # DEFAULT VALUE: "Hello! I am a bot. Type !help for a list of commands."
@@ -46,11 +46,11 @@ PlayerCommand = "ffmpeg"
 
 # Cache songs as they are downloaded?
 # DEFAULT VALUE: false
-Enabled = false
+Enabled = true
 
 # Maximum total file size of cache directory (in MB)
 # DEFAULT VALUE: 512
-MaximumSize = 512
+MaximumSize = 16384
 
 # Period of time that should elapse before a song is cleared from the cache (in hours)
 # DEFAULT VALUE: 24
@@ -61,7 +61,7 @@ ExpireTime = 24
 
 # Default volume
 # DEFAULT VALUE: 0.2
-DefaultVolume = 0.2
+DefaultVolume = 0.1
 
 # Lowest volume allowed
 # DEFAULT VALUE: 0.01
@@ -69,7 +69,7 @@ LowestVolume = 0.01
 
 # Highest volume allowed
 # DEFAULT VALUE: 0.8
-HighestVolume = 0.8
+HighestVolume = 1.0
 
 
 [Aliases]
@@ -104,7 +104,7 @@ HelpAlias = "help"
 
 # Alias used for volume command
 # DEFAULT VALUE: "volume"
-VolumeAlias = "volume"
+VolumeAlias = "v"
 
 # Alias used for move command
 # DEFAULT VALUE: "move"
@@ -160,7 +160,7 @@ ShuffleOffAlias = "shuffleoff"
 
 # Alias used for listsongs command
 # DEFAULT_VALUE: "listsongs"
-ListSongsAlias = "listsongs"
+ListSongsAlias = "list"
 
 # Alias used for version command
 # DEFAULT_VALUE: "version"
@@ -179,7 +179,7 @@ AdminsEnabled = true
 # SYNTAX: In order to specify multiple admins, repeat the Admins="username"
 # line of code. Each line has one username, and an unlimited amount of usernames may
 # be entered in this matter.
-Admins = "Matt"
+Admins = "schmatzler"
 
 # Make add an admin command?
 # DEFAULT VALUE: false

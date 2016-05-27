@@ -133,11 +133,11 @@ const HELP_HTML = `<br/>
 	<b>User Commands:</b>
 	<p><b>!help</b> - Displays this help.</p>
 	<p><b>!add</b> - Adds songs/playlists to queue.</p>
-	<p><b>!volume</b> - Either tells you the current volume or sets it to a new volume.</p>
+	<p><b>!v</b> - Either tells you the current volume or sets it to a new volume.</p>
 	<p><b>!skip</b> - Casts a vote to skip the current song</p>
 	<p> <b>!skipplaylist</b> - Casts a vote to skip over the current playlist.</p>
 	<p><b>!numsongs</b> - Shows how many songs are in queue.</p>
-	<p><b>!listsongs</b> - Lists the songs in queue.</p>
+	<p><b>!list</b> - Lists the songs in queue.</p>
 	<p><b>!nextsong</b> - Shows the title and submitter of the next queue item if it exists.</p>
 	<p><b>!currentsong</b> - Shows the title and submitter of the song currently playing.</p>
 	<p><b>!version</b> - Shows the version of the bot.</p>
