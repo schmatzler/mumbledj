@@ -141,21 +141,6 @@ const HELP_HTML = `<br/>
 	<p><b>!nextsong</b> - Zeigt Titel und Einsender des nächsten Songs an, wenn es einen gibt.</p>
 	<p><b>!currentsong</b> - Zeigt Titel und Einsender des aktuellen Songs an.</p>
 	<p><b>!version</b> - Zeigt die Version von Rotomat an.</p>
-	<p style="-qt-paragraph-type:empty"><br/></p>
-	<p><b>Adminbefehle:</b></p>
-	<p><b>!addnext</b> - Adds songs/playlists to queue after the current song.</p>
-	<p><b>!reset</b> - An admin command that resets the song queue. </p>
-	<p><b>!forceskip</b> - An admin command that forces a song skip. </p>
-	<p><b>!forceskipplaylist</b> - An admin command that forces a playlist skip. </p>
-	<p><b>!shuffle</b> - An admin command that shuffles the current queue. </p>
-	<p><b>!shuffleon</b> - An admin command that enables auto shuffling.</p>
-  	<p><b>!shuffleoff</b> - An admin command that disables auto shuffling.</p>
-	<p><b>!move </b>- Moves MumbleDJ into channel if it exists.</p>
-	<p><b>!reload</b> - Reloads mumbledj.gcfg configuration settings.</p>
-	<p><b>!setcomment</b> - Sets the comment for the bot.</p>
-	<p><b>!numcached</b></p> - Outputs the number of songs cached on disk.</p>
-	<p><b>!cachesize</b></p> - Outputs the total file size of the cache in MB.</p>
-	<p><b>!kill</b> - Safely cleans the bot environment and disconnects from the server.</p>
 `
 
 // Message shown to users when they ask for the current volume (volume command without argument)
