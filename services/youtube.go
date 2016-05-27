@@ -52,16 +52,6 @@ func (yt *YouTube) CheckAPIKey() error {
 	return err
 }
 
-// CheckURL matches the passed URL with a list of regex patterns
-// for valid URLs associated with this service. Returns true if a
-// match is found, false otherwise.
-func (yt *YouTube) CheckURL(url string) bool {
-	if yt.isTrack(url) || yt.isPlaylist(url) {
-		return true
-	}
-	return false
-}
-
 // GetTracks uses the passed URL to find and return
 // tracks associated with the URL. An error is returned
 // if any error occurs during the API call.

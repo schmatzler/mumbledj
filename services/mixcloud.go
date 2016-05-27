@@ -39,16 +39,6 @@ func (mc *Mixcloud) CheckAPIKey() error {
 	return nil
 }
 
-// CheckURL matches the passed URL with a list of regex patterns
-// for valid URLs associated with this service. Returns true if a
-// match is found, false otherwise.
-func (mc *Mixcloud) CheckURL(url string) bool {
-	if mc.isTrack(url) || mc.isPlaylist(url) {
-		return true
-	}
-	return false
-}
-
 // GetTracks uses the passed URL to find and return
 // tracks associated with the URL. An error is returned
 // if any error occurs during the API call.

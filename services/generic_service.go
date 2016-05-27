@@ -18,6 +18,16 @@ type GenericService struct {
 	PlaylistRegex []string
 }
 
+// CheckURL matches the passed URL with a list of regex patterns
+// for valid URLs associated with this service. Returns true if a
+// match is found, false otherwise.
+func (gs *GenericService) CheckURL(url string) bool {
+	if gs.isTrack(url) || gs.isPlaylist(url) {
+		return true
+	}
+	return false
+}
+
 func (gs *GenericService) isTrack(url string) bool {
 	for _, regex := range gs.TrackRegex {
 		re, _ := regexp.Compile(regex)
