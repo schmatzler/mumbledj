@@ -47,3 +47,9 @@ func (gs *GenericService) isPlaylist(url string) bool {
 	}
 	return false
 }
+
+// TODO: Implement this method!
+func (gs *GenericService) getID(url string) (string, error) {
+	allRegex := append(gs.TrackRegex, gs.PlaylistRegex...)
+	return "", nil
+}
