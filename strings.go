@@ -159,7 +159,7 @@ const SKIP_ADDED_HTML = `
 
 // Message shown to users when the submitter of a song decides to skip their song.
 const SUBMITTER_SKIP_HTML = `
-	Der Einsender hat den Titel übersprungen.
+	Der Einsender <b>%s</b> hat den Titel übersprungen.
 `
 
 // Message shown to users when another user votes to skip the current playlist.
