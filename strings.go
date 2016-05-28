@@ -32,7 +32,7 @@ const CHANNEL_DOES_NOT_EXIST_MSG = "Der angegebene Kanal existiert nicht."
 const INVALID_URL_MSG = "Der Link den du eingesendet hast, ist in keinem unterstützten Format."
 
 // Message shown to users when they attempt to search on an invalid platform.
-const INVALID_SEARCH_PROVIDER  = "The Search provider you submitted does not match the required format."
+const INVALID_SEARCH_PROVIDER  = "Der Service auf dem du nach etwas suchen wolltest, wird nicht unterstützt. Du kannst nur auf SoundCloud und YouTube suchen."
 
 // Message shown to users when they attempt to add a video that's too long
 const TRACK_TOO_LONG_MSG = "Deine Einsendung %s überschreitet die maximal festgelegte Länge."
@@ -135,7 +135,7 @@ const PLAYLIST_SKIPPED_HTML = `
 const HELP_HTML = `<br/>
 	<b>Benutzerbefehle:</b>
 	<p><b>!help</b> - Zeigt diese Hilfe an.</p>
-	<p><b>!search (yt|sc) query</b> - Search on Youtube or Soundcloud for a query and add first hit.</p>
+	<p><b>!search (yt|sc) begriff</b> - Suche auf Youtube oder Soundcloud, erster Treffer wird abgespielt.</p>
 	<p><b>!add</b> - Fügt Songs/Playlisten hinzu.</p>
 	<p><b>!v</b> - Zeigt entweder die aktuelle Lautstärke an oder ändert sie.</p>
 	<p><b>!skip</b> - Stimme gegen den aktuellen Titel abgeben.</p>
@@ -144,7 +144,10 @@ const HELP_HTML = `<br/>
 	<p><b>!list</b> - Zeigt die Songs in der Warteschlange an.</p>
 	<p><b>!nextsong</b> - Zeigt Titel und Einsender des nächsten Songs an, wenn es einen gibt.</p>
 	<p><b>!currentsong</b> - Zeigt Titel und Einsender des aktuellen Songs an.</p>
-	<p><b>!version</b> - Zeigt die Version von Rotomat an.</p>
+	<b>nur bei Rotomat:</b>
+	<p><b>$random</b> - spiele irgendwas vom Soundboard ab.</p>
+	<p><b>$sb name</b> - spiele ein Sample vom Soundboard, z.B mit "$sb ziege".</p>
+
 `
 
 // Message shown to users when they ask for the current volume (volume command without argument)
