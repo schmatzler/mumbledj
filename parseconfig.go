@@ -45,6 +45,9 @@ type DjConfig struct {
 		SkipPlaylistAlias      string
 		AdminSkipAlias         string
 		AdminSkipPlaylistAlias string
+		StopAlias              string
+		SoundBoardAlias        string
+		RandomAlias            string
 		HelpAlias              string
 		VolumeAlias            string
 		MoveAlias              string
@@ -71,6 +74,9 @@ type DjConfig struct {
 		AdminAddNext       bool
 		AdminAddPlaylists  bool
 		AdminSkip          bool
+		AdminStop          bool
+		AdminSoundBoard    bool
+		AdminRandom        bool
 		AdminHelp          bool
 		AdminVolume        bool
 		AdminMove          bool
@@ -87,6 +93,10 @@ type DjConfig struct {
 		AdminShuffleToggle bool
 		AdminListSongs     bool
 		AdminVersion       bool
+	}
+	SoundBoardList struct {
+		SoundList		  []string
+		SoundBoardSite	  string
 	}
 	ServiceKeys struct {
 		Youtube    string

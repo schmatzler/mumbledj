@@ -14,8 +14,11 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"math/rand"
+	"time"
 
 	"github.com/layeh/gumble/gumble"
+	"github.com/layeh/gumble/gumble_ffmpeg"
 )
 
 // parseCommand views incoming chat messages and determines if there is a valid command within them.
@@ -83,6 +86,35 @@ func parseCommand(user *gumble.User, username, command string) {
 			skip(user, true, true)
 		} else {
 			dj.SendPrivateMessage(user, NO_PERMISSION_MSG)
+		}
+	// Stop command
+	case dj.conf.Aliases.StopAlias:
+		if dj.HasPermission(username, dj.conf.Permissions.AdminStop)	{
+			stop(username)
+		} else {
+			user.Send(NO_PERMISSION_MSG)
+		}
+	// SoundBoard command
+	case dj.conf.Aliases.SoundBoardAlias:
+		if dj.HasPermission(username, dj.conf.Permissions.AdminSoundBoard)	{
+			SoundBoard(username, argument, false)
+		} else {
+			user.Send(NO_PERMISSION_MSG)
+		}
+	// Random command
+	case dj.conf.Aliases.RandomAlias:
+		if dj.HasPermission(username, dj.conf.Permissions.AdminRandom)	{
+			rand.Seed(time.Now().UnixNano())
+			//for _, sclipz := range dj.conf.Permissions.SoundList {
+				//if username == adminName {
+					//return true
+				//}
+			//}
+			//sclip string := random.shuffle(dj.conf.Permissions.SoundList)
+			sclip := dj.conf.SoundBoardList.SoundList[rand.Intn(len(dj.conf.SoundBoardList.SoundList))]
+			SoundBoard(username, sclip, true)
+		} else {
+			user.Send(NO_PERMISSION_MSG)
 		}
 	// Help command
 	case dj.conf.Aliases.HelpAlias:
@@ -327,6 +359,31 @@ func skip(user *gumble.User, admin, playlistSkip bool) {
 		}
 	} else {
 		dj.SendPrivateMessage(user, NO_MUSIC_PLAYING_MSG)
+	}
+}
+
+// Stops all sounds from playing
+func stop(username string) {
+    // song_queue:remove_right()
+	// reset_skips()
+    dj.audioStream.Stop()
+}
+
+func SoundBoard(username string, argument string, lerandom bool) {
+
+	filePath := fmt.Sprintf("%s/.mumbledj/soundboard/%s.ogg", dj.homeDir, argument)
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		dj.client.Self.Channel.Send(fmt.Sprintf("%s has requested an invalid soundboard clip.", username), false)
+	} else {
+		dj.audioStream.Source = gumble_ffmpeg.SourceFile(fmt.Sprintf(filePath))
+		if err := dj.audioStream.Play(); err != nil {
+			panic(err)
+		}
+		if lerandom {
+			dj.client.Self.Channel.Send(fmt.Sprintf("%s has randomly played %s", username, argument), false)
+		} else {
+			dj.client.Self.Channel.Send(fmt.Sprintf("%s has requested %s", username, argument), false)
+		}
 	}
 }
 
