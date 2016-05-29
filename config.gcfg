@@ -7,7 +7,7 @@
 
 # Command prefix
 # DEFAULT VALUE: "!"
-CommandPrefix = "!"
+CommandPrefix = " "
 
 # Ratio that must be met or exceeded to trigger a song skip
 # DEFAULT VALUE: 0.5

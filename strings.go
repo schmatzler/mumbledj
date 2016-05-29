@@ -145,8 +145,8 @@ const HELP_HTML = `<br/>
 	<p><b>!nextsong</b> - Zeigt Titel und Einsender des nächsten Songs an, wenn es einen gibt.</p>
 	<p><b>!currentsong</b> - Zeigt Titel und Einsender des aktuellen Songs an.</p>
 	<b>nur bei Rotomat:</b>
-	<p><b>$random</b> - spiele irgendwas vom Soundboard ab.</p>
-	<p><b>$sb name</b> - spiele ein Sample vom Soundboard, z.B mit "$sb ziege".</p>
+	<p><b>random</b> - spiele irgendwas vom Soundboard ab.</p>
+	<p><b>sb name</b> - spiele ein Sample vom Soundboard, z.B mit "sb ziege".</p>
 
 `
 

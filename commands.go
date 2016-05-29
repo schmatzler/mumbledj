@@ -373,7 +373,7 @@ func SoundBoard(username string, argument string, lerandom bool) {
 
 	filePath := fmt.Sprintf("%s/.mumbledj/soundboard/%s.ogg", dj.homeDir, argument)
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		dj.client.Self.Channel.Send(fmt.Sprintf("%s hat einen falschen Soundboard-Clip angefordert.", username), false)
+		dj.client.Self.Channel.Send(fmt.Sprintf("%s hat die Hilfe nicht gelesen. <b>LOL</b>.", username), false)
 	} else {
 		dj.audioStream.Source = gumble_ffmpeg.SourceFile(fmt.Sprintf(filePath))
 	    if !dj.audioStream.IsPlaying() {
@@ -381,9 +381,9 @@ func SoundBoard(username string, argument string, lerandom bool) {
 				panic(err)
 			}
 			if lerandom {
-				dj.client.Self.Channel.Send(fmt.Sprintf("%s hat zufällig %s gespielt", username, argument), false)
+				dj.client.Self.Channel.Send(fmt.Sprintf("%s hat zufällig <b>%s</b> gespielt", username, argument), false)
 			} else {
-				dj.client.Self.Channel.Send(fmt.Sprintf("%s hat %s angefordert", username, argument), false)
+				dj.client.Self.Channel.Send(fmt.Sprintf("%s hat <b>%s</b> angefordert", username, argument), false)
 			}
 		}
 	}
