@@ -51,6 +51,7 @@ type DjConfig struct {
 		HelpAlias              string
 		VolumeAlias            string
 		MoveAlias              string
+        	JoinMeAlias            string
 		ReloadAlias            string
 		ResetAlias             string
 		NumSongsAlias          string
@@ -80,6 +81,7 @@ type DjConfig struct {
 		AdminHelp          bool
 		AdminVolume        bool
 		AdminMove          bool
+        	AdminJoinMe        bool
 		AdminReload        bool
 		AdminReset         bool
 		AdminNumSongs      bool

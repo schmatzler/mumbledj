@@ -101,6 +101,9 @@ const SHUFFLE_ACTIVATED_ERROR_MESSAGE = "Automatisches Shuffeln ist bereits akti
 // Message shown to user when they attempt to disable automatic shuffle while it's already deactivated
 const SHUFFLE_DEACTIVATED_ERROR_MESSAGE = "Automatisches Shuffeln ist bereits deaktiviert."
 
+// Message shown to user when they attempt to move the bot and it is already playing audio to others.
+const PEOPLE_ARE_LISTENING_TO_ME = "Leute in einem anderen Kanal hören mir gerade zu."
+
 // Message shown to channel when a song is added to the queue by a user.
 const SONG_ADDED_HTML = `
 	<b>%s</b> hat "%s" zur Warteschlange hinzugefügt.
@@ -144,6 +147,7 @@ const HELP_HTML = `<br/>
 	<p><b>!list</b> - Zeigt die Songs in der Warteschlange an.</p>
 	<p><b>!nextsong</b> - Zeigt Titel und Einsender des nächsten Songs an, wenn es einen gibt.</p>
 	<p><b>!currentsong</b> - Zeigt Titel und Einsender des aktuellen Songs an.</p>
+	<p><b>!joinme</b> - Verschiebt den Bot in den aktuellen Kanal, wenn gerade kein Audio abgespielt wird.</p>
 	<b>nur bei Rotomat:</b>
 	<p><b>random</b> - spiele irgendwas vom Soundboard ab.</p>
 	<p><b>sb name</b> - spiele ein Sample vom Soundboard, z.B mit "sb ziege".</p>
