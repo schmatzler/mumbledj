@@ -351,4 +351,6 @@ SoundList = "fack"
 SoundList = "dreck"
 SoundList = "magie"
 SoundList = "staun"
-
+SoundList = "engl"
+SoundList = "hear"
+SoundList = "zerstoer"
