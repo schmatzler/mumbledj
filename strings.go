@@ -66,7 +66,7 @@ const ADMIN_SONG_SKIP_MSG = "Ein Admin hat den Titel übersprungen."
 const ADMIN_PLAYLIST_SKIP_MSG = "Ein Admin hat die Playlist übersprungen."
 
 // Message shown to users when the audio for a video could not be downloaded.
-const AUDIO_FAIL_MSG = "Der Audio-Download für dieses Video ist fehlgeschlagen. Springe zum nächsten Titel!"
+const AUDIO_FAIL_MSG = "Der Audio-Download für das Video <b>%s</b> ist fehlgeschlagen. Springe zum nächsten Titel!"
 
 // Message shown to users when they supply an URL that does not contain a valid ID.
 const INVALID_ID_MSG = "Der eingesendete Link %s enthält keine gültige ID."
